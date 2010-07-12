@@ -22,11 +22,11 @@ package middlewar.common;
  */
 public class MiddlewarConfiguration {
 
-    private static String imageDistPath="http://192.168.1.32/middlewar/images/";
-    private static String clientDistPath="http://192.168.1.32/middlewar/MiddleWarClient.jar";
-    private static String commonDistPath="http://192.168.1.32/middlewar/MiddleWarCommon.jar";
-    private static String xmwpDistPath="http://192.168.1.32/middlewar/MiddleWarXMWP.jar";
-    private static String xmwpSrvUrl="http://192.168.1.32:8080/MiddleWarServer/MiddleWarXMWPServer";
+    private static String imageDistPath="http://middlewar.dev/middlewar/images/";
+    private static String clientDistPath="http://middlewar.dev/middlewar/MiddleWarClient.jar";
+    private static String commonDistPath="http://middlewar.dev/middlewar/MiddleWarCommon.jar";
+    private static String xmwpDistPath="http://middlewar.dev/middlewar/MiddleWarXMWP.jar";
+    private static String xmwpSrvUrl="http://middlewar.dev:8080/MiddleWarServer/MiddleWarXMWPServer";
 
     //private static final String confFile="/mw.conf";
 
