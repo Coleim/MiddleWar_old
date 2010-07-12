@@ -1,0 +1,63 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>WM Tuto 6</title>
+        <link href="./wm-style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <a href="./index.jsp"><img src="./logo.png" class='logo' ></a>
+        <br><b>world - maker / version 1.0</b>
+        <br><a href="./tuto_5.html"><img class='logo' src="./arrow_left.png"></a> <a href="./tuto_7.html"><img class='logo' src="./arrow_right.png"></a>
+        <h2>TUTO - 6 - Prenons de l'altitude</h2>
+        <p>
+            <b><code>World world = new World(new BlockSurface(15, 15),"world-test");</code></b><br><br>
+            <b><code>WorldBuilder wb = new WorldBuilder(world);</code></b><br><br>
+            <code>// @see TUTO 3</code><br>
+            <b><code>wb.addPatternBlock(15,15,BlockPosition.origin,BlockType.grass_C,true);</code></b><br><br>
+            <code>// @see TUTO 3</code><br>
+            <b><code>wb.addPatternSquare(4,4,new BlockPosition(3, 3),SurfaceType.town_ground_1_grass,false);</code></b><br><br>
+            <code>// @see TUTO 3</code><br>
+            <b><code>wb.addPatternSquare(8,4,new BlockPosition(2, 9),SurfaceType.grass_2,true);</code></b><br><br>
+            <code>// @see TUTO 4</code><br>
+            <b><code> int[][] mapping = {</code></b><br>
+                  <b><code>             { <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>,
+                  <span style="color:red;">1</span>, 0 },</code></b><br>
+                 <b><code>             { <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>,
+                 <span style="color:red;">1</span>, 0 },</code></b><br>
+                 <b><code>              { 0, 0, 0, 0, 0, 0, 0, 0, 0, <span style="color:red;">1</span>, <span style="color:red;">1</span>, 0 },</code></b><br>
+                 <b><code>              { 0, 0, 0, 0, 0, 0, 0, 0, 0, <span style="color:red;">1</span>, <span style="color:red;">1</span>, 0 },</code></b><br>
+                 <b><code>              { 0, 0, 0, 0, 0, 0, 0, 0, 0, <span style="color:red;">1</span>, <span style="color:red;">1</span>, 0 },</code></b><br>
+                 <b><code>              { 0, 0, 0, 0, 0, 0, 0, 0, 0, <span style="color:red;">1</span>, <span style="color:red;">1</span>, 0 },</code></b><br>
+                 <b><code>              { 0, 0, 0, 0, 0, 0, 0, 0, 0, <span style="color:red;">1</span>, <span style="color:red;">1</span>, 0 },</code></b><br>
+                  <b><code>             { 0, 0, 0, 0, 0, 0, 0, 0, 0, <span style="color:red;">1</span>, <span style="color:red;">1</span>, 0 },</code></b><br>
+                  <b><code>             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }</code></b><br>
+                   <b><code>          };</code></b><br><br>
+            <code>// @see TUTO 4 <span style="color:orange;">Le 1 indique ici que l'altitude utilisée est 1</span></code><br>
+            <b><code>wb.addPatternCustom(new BlockPosition(0, 0),SurfaceType.grass,<b><span style="color:orange;">1</span></b>,mapping);</code></b><br><br>
+            <b><code>wb.buildWorld();</code></b><br><br>
+        </p>
+            <img src="./tuto_6.jpg">
+    </body>
+</html>

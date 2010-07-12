@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>WM Tuto 1</title>
+        <link href="./wm-style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <a href="./index.jsp"><img src="./logo.png" class='logo' ></a>
+        <br><b>world - maker / version 1.0</b>
+        <br><a href="./tuto_1.html"><img class='logo' src="./arrow_left.png"></a> <a href="./tuto_2.html"><img class='logo' src="./arrow_right.png"></a>
+        <h2>TUTO - 1 - La base de la base</h2>     
+        <p>
+            <code> // Creation d'un "world" de 15x15 cases</code><br>
+            <b><code>World world = new World(new BlockSurface(15, 15),"world-test");</code></b><br><br>
+            <code> // Initialisation du constructeur, editeur de "world"</code><br>
+            <b><code>WorldBuilder wb = new WorldBuilder(world);</code></b><br><br>
+            <code>// On ajoute une surface de 15x15 , a partir de la position 0,0. Toutes les cases</code><br>
+            <code>// Sur cette surface seront de type <i>BlockType.surface_default</i></code><br>
+            <b><code>wb.addPatternBlock(15,15,BlockPosition.origin,BlockType.surface_default,true);</code></b><br><br>
+            <code>// On ajoute la surface au "world"</code><br>
+            <b><code>wb.buildWorld();</code></b><br><br>
+        </p>
+            <img src="./tuto_1.jpg">
+    </body>
+</html>

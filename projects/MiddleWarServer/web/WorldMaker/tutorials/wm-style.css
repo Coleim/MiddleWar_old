@@ -1,0 +1,56 @@
+.MgpLayer{
+    position:absolute;
+}
+
+.Mgp{
+    border: 1px solid black;
+}
+
+.world{
+}
+
+.wp_table td{
+    border: 0px;
+    width:32px;
+    height:32px;
+}
+
+.wp_table table{
+    border:none;
+}
+
+.miniview {
+    width:32px;
+    height:32px;
+    vertical-align:middle;
+    border:0px
+}
+
+.logo {
+    vertical-align:middle;
+    border:0px
+}
+
+.world_block{
+    /*width: 32px;*/
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    padding-top:0px;
+    border:	0px;
+    z-index:8;
+}
+
+ul {
+    list-style:none
+}
+
+.menu {
+    list-style:circle;
+    font-size:20px;
+}
+
+h2{
+    border-bottom:1px solid black;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>WM Tuto 4</title>
+        <link href="./wm-style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <a href="./index.jsp"><img src="./logo.png" class='logo' ></a>
+        <br><b>world - maker / version 1.0</b>
+        <br><a href="./tuto_3.html"><img class='logo' src="./arrow_left.png"></a> <a href="./tuto_5.html"><img class='logo' src="./arrow_right.png"></a>
+        <h2>TUTO - 4 - Et de deux !</h2>
+        <p>
+            <b><code>World world = new World(new BlockSurface(15, 15),"world-test");</code></b><br><br>
+            <b><code>WorldBuilder wb = new WorldBuilder(world);</code></b><br><br>
+            <code>// @see TUTO 3</code><br>
+            <b><code>wb.addPatternBlock(15,15,BlockPosition.origin,BlockType.grass_C,true);</code></b><br><br>
+            <code>// @see TUTO 3</code><br>
+            <b><code>wb.addPatternSquare(4,4,new BlockPosition(3, 2),SurfaceType.town_ground_1_grass,false);</code></b><br><br>
+            <code>// @see TUTO 3</code><br>
+            <b><code>wb.addPatternSquare(8,4,new BlockPosition(2, 8),SurfaceType.grass_2,true);</code></b><br><br>
+            <b><code>wb.buildWorld();</code></b><br><br>
+        </p>
+            <img src="./tuto_4.jpg">
+    </body>
+</html>
