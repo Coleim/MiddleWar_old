@@ -1,25 +1,20 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Middle War Client
+ *
  */
-
 package middlewar.client.business.board;
 
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Hashtable;
 import middlewar.client.business.Game;
-import middlewar.common.BlockPosition;
-import middlewar.common.Position;
-import middlewar.common.PxPosition;
-import middlewar.client.exception.ClientException;
-import middlewar.client.exception.DataException;
+import middlewar.common.*;
+import middlewar.client.exception.*;
 
 /**
  *
- * @author jonathan
+ * @author higurashi
  */
 public class Board {
 

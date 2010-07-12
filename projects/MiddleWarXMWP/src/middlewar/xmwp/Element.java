@@ -76,6 +76,7 @@ public abstract class Element {
         } catch (IllegalArgumentException e) {
             throw new middlewar.xmwp.XMWPException(e.getMessage());
         } catch (InvocationTargetException e) {
+            e.printStackTrace();
             throw new middlewar.xmwp.XMWPException(e.getMessage());
         }
     }

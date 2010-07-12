@@ -51,8 +51,7 @@ public class PlayerInformElement extends Element{
 
     @Override
     protected void setAttributes(org.xml.sax.Attributes attributes) {
-        String unitsList = attributes.getValue("units");
-        System.out.println("nnn"+unitsList);
+        String unitsList = attributes.getValue("units");  
         if(unitsList != null) units = unitsList.split(",");
         id = attributes.getValue("id");
     }

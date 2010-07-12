@@ -26,7 +26,7 @@ import org.xml.sax.*;
  */
 public class Message {
 
-    protected String key;
+    protected String key = null;
     protected Vector<Element> inform;
     protected Vector<Element> request;
     protected org.w3c.dom.Document doc;
@@ -228,10 +228,18 @@ public class Message {
         addInform(new ErrorInformElement("Unsuported operation"));
     }
 
+    /**
+     * Return the security key
+     * @return
+     */
     public String getKey() {
         return key;
     }
 
+    /**
+     * Modify the security key
+     * @param key
+     */
     public void setKey(String key) {
         this.key = key;
     }

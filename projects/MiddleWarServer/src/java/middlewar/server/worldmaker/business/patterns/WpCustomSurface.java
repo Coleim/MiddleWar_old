@@ -82,24 +82,24 @@ public class WpCustomSurface extends WorldPattern{
         for(int i=0;i<x;i++) {
             for(int j=0;j<y;j++) {
 
-                C = this.description[i][j]==1;
-                H = j>0 && this.description[i][j-1]==1;
-                B = j+1<this.description[i].length-1 && this.description[i][j+1]==1;
-                G = i>0 && this.description[i-1][j]==1;
-                D = i+1<this.description.length-1 && this.description[i+1][j]==1;
+                C = this.description[i][j]==1 || this.description[i][j]==2;
+                H = (j==0) || (j>0 && (this.description[i][j-1]==1 || this.description[i][j-1]==2));
+                B = (j==y-1) || (j+1<=this.description[i].length-1 && (this.description[i][j+1]==1 || this.description[i][j+1]==2));
+                G = (i==0) || (i>0 && (this.description[i-1][j]==1 || this.description[i-1][j]==2));
+                D = (i==x-1) || ( i+1<=this.description.length-1 && (this.description[i+1][j]==1 || this.description[i+1][j]==2));
                 NC = this.description[i][j]==0;
-                NH = j<=0 || this.description[i][j-1]==0;
-                NB = j+1>=this.description[i].length-1 || this.description[i][j+1]==0;
-                NG = i<=0 || this.description[i-1][j]==0;
-                ND = i+1>=this.description.length-1 || this.description[i+1][j]==0;
-                HD = j>0 && i>0 && this.description[i-1][j-1]==1;
-                HG = j>0 && i+1<this.description.length-1 && this.description[i+1][j-1]==1;
-                BD = j+1<this.description[i].length-1 && i>0 && this.description[i-1][j+1]==1;
-                BG = j+1<this.description[i].length-1 && i+1<this.description.length-1 && this.description[i+1][j+1]==1;
-                NHD = j>0 && i>0 && this.description[i-1][j-1]==0;
-                NHG = j>0 && i+1<this.description.length-1 && this.description[i+1][j-1]==0;
-                NBD = j+1<this.description[i].length-1 && i>0 && this.description[i-1][j+1]==0;
-                NBG = j+1<this.description[i].length-1 && i+1<this.description.length-1 && this.description[i+1][j+1]==0;
+                NH = !H;// /*j<=0 ||*/ j>0 && this.description[i][j-1]==0;
+                NB = !B;// /*j+1>=this.description[i].length-1 ||*/ j+1<=this.description[i].length-1 && this.description[i][j+1]==0;
+                NG = !G;// /*i<=0 ||*/ i>0 && this.description[i-1][j]==0;
+                ND = !D;// /*i+1>=this.description.length-1 ||*/ i+1<=this.description.length-1 && this.description[i+1][j]==0;
+                HD = (j==0 || i==0) || (j>0 && i>0 && (this.description[i-1][j-1]==1 || this.description[i-1][j-1]==2));
+                HG = (j==0 || i==x-1) || (j>0 && i+1<=this.description.length-1 && (this.description[i+1][j-1]==1 || this.description[i+1][j-1]==2));
+                BD = (j==y-1 || i==0) || (j+1<=this.description[i].length-1 && i>0 && (this.description[i-1][j+1]==1 || this.description[i-1][j+1]==2));
+                BG = (j==y-1 || i==x-1) || (j+1<=this.description[i].length-1 && i+1<=this.description.length-1 && (this.description[i+1][j+1]==1 || this.description[i+1][j+1]==2));
+                NHD = !HD;//(j>0 && i>0 && this.description[i-1][j-1]==0);
+                NHG = !HG;//j>0 && i+1<=this.description.length-1 && this.description[i+1][j-1]==0;
+                NBD = !BD;//j+1<=this.description[i].length-1 && i>0 && this.description[i-1][j+1]==0;
+                NBG = !BG;//j+1<=this.description[i].length-1 && i+1<=this.description.length-1 && this.description[i+1][j+1]==0;
 
                     if(this.description[i][j]==2){
                         this.setBlock(i,j,0,this.surface.getBasicSet().C_I,false);
@@ -180,9 +180,7 @@ public class WpCustomSurface extends WorldPattern{
                             else if(NBD) this.setBlock(i,j,0,this.getSOI(this.level),true);
                             else if(NBG) this.setBlock(i,j,0,this.getSEI(this.level),true);
                             else {
-                                if(this.surface != SurfaceType.water_1_A){
-                                    this.setBlock(i,j,0,this.surface.getBasicSet().C_I,this.passing);
-                                }
+                                this.setBlock(i,j,0,this.surface.getBasicSet().C_I,this.passing);
                             }
                         }
                     }

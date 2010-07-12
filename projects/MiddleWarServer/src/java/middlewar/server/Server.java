@@ -7,7 +7,9 @@ package middlewar.server;
 
 import middlewar.server.business.player.PlayerManager;
 import middlewar.server.business.unit.UnitManager;
+import middlewar.server.business.world.WorldManager;
 import middlewar.server.engine.GameEngine;
+import middlewar.server.xmwp.XMWPUpdateManager;
 
 /**
  * Access to all managers
@@ -20,7 +22,8 @@ public class Server {
     public static final DataManager dataManager = new DataManager();
     public static final PlayerManager playerManager = new PlayerManager();
     public static final UnitManager unitManager = new UnitManager();
-
+    public static final WorldManager worldManager = new WorldManager();
+    public static final XMWPUpdateManager xmwpUpdateManager = new XMWPUpdateManager();
     public static final GameEngine gameEngine = new GameEngine();
     
 }

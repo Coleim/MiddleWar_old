@@ -29,12 +29,12 @@ public class Unit {
 
     private Orientation orientation;
 
-    public Unit(String id, BlockPosition position, WorldName world, Orientation orientation){
+    public Unit(String id,String playerId, BlockPosition position, WorldName world, Orientation orientation){
         this.id = id;
         this.position = position;
         this.world = world;
         this.orientation = orientation;
-        this.position = new BlockPosition(0,0);
+        this.playerId = playerId;
     }
 
     public WorldName getWorld() {

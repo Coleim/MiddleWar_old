@@ -136,13 +136,9 @@ public class World implements Serializable{
 
         //if(Constains.debugWorld) System.out.println("[mw] get worlds for position "+position);
 
-        int x =( (position.getBlockX()
-          -(position.getBlockX()%MAP_SURFACE.getBlockX()))
-          /MAP_SURFACE.getBlockX() ) * MAP_SURFACE.getBlockX();
+        int x = getXMapPosition(position);
 
-        int y =( (position.getBlockY()
-          -(position.getBlockY()%MAP_SURFACE.getBlockY()))
-          /MAP_SURFACE.getBlockY() ) * MAP_SURFACE.getBlockY();
+        int y = getYMapPosition(position);
 
         Vector<String> world = new Vector<String>();
 
@@ -244,6 +240,24 @@ public class World implements Serializable{
     public String[] getMapsNames(){
         String[] names = new String[this.maps.values().size()];
         return this.maps.values().toArray(names);
+    }
+
+    private static int getXMapPosition(BlockPosition position) {
+        int x =( (position.getBlockX()
+          -(position.getBlockX()%MAP_SURFACE.getBlockX()))
+          /MAP_SURFACE.getBlockX() ) * MAP_SURFACE.getBlockX();
+        return x;
+    }
+
+    private static int getYMapPosition(BlockPosition position) {
+        int y =( (position.getBlockY()
+          -(position.getBlockY()%MAP_SURFACE.getBlockY()))
+          /MAP_SURFACE.getBlockY() ) * MAP_SURFACE.getBlockY();
+        return y;
+    }
+
+    public static BlockPosition getMapPosition(BlockPosition position) {
+        return new BlockPosition(getXMapPosition(position), getYMapPosition(position));
     }
 
 

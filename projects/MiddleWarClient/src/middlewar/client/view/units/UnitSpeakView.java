@@ -36,7 +36,7 @@ public class UnitSpeakView extends View{
 
         //Unit unit = unitSpeak.getUnit();
         int lines = 1;
-        int length = 0;
+        int length = 2;
         String[] linesContent = null;
         
 

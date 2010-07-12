@@ -8,6 +8,7 @@ package middlewar.client.business.world;
 import java.awt.Image;
 import java.util.Hashtable;
 import java.util.Vector;
+import middlewar.client.business.Game;
 import middlewar.common.*;
 import middlewar.client.exception.ClientException;
 
@@ -23,6 +24,7 @@ public class Map {
     private Hashtable<BlockPosition,Image> blocksLayer0_0 = new Hashtable<BlockPosition,Image>();
     private Hashtable<BlockPosition,Image> blocksLayer0_1 = new Hashtable<BlockPosition,Image>();
     private Hashtable<BlockPosition,Image> blocksLayer0_2 = new Hashtable<BlockPosition,Image>();
+    private Hashtable<BlockPosition,Image> blocksLayer0_3 = new Hashtable<BlockPosition,Image>();
 
     // world layer up
     private Hashtable<BlockPosition,Image> blocksLayer1_0 = new Hashtable<BlockPosition,Image>();
@@ -70,13 +72,14 @@ public class Map {
     }
 
     public void addImage(Image image,int x, int y,int layer,int order) throws ClientException {
-        
+
         if(layer == 0){
             switch(order){
                 case 0 : blocksLayer0_0.put(new BlockPosition(x, y), image); break;
                 case 1 : blocksLayer0_1.put(new BlockPosition(x, y), image); break;
                 case 2 : blocksLayer0_2.put(new BlockPosition(x, y), image); break;
-                default: throw new ClientException("NO LAYER "+layer+" / order "+order);
+                case 3 : blocksLayer0_3.put(new BlockPosition(x, y), image); break;
+                default: throw new ClientException("NO LAYER '"+layer+"' / order '"+order+"'");
             }
         }else if(layer==1){
             blocksLayer1_0.put(new BlockPosition(x, y), image);
@@ -93,7 +96,8 @@ public class Map {
                 case 0 : return blocksLayer0_0;
                 case 1 : return blocksLayer0_1;
                 case 2 : return blocksLayer0_2;
-                default: throw new ClientException("NO LAYER "+layer+" / order "+order);
+                case 3 : return blocksLayer0_3;
+                default: throw new ClientException("NO LAYER '"+layer+"' / order '"+order+"'");
             }
         }else if(layer == 1){
             return blocksLayer1_0;
@@ -110,10 +114,11 @@ public class Map {
 
         if(layer == 0){
             switch(order){
-                case 0 : list = blocksLayer0_0;
-                case 1 : list =  blocksLayer0_1;
-                case 2 : list =  blocksLayer0_2;
-                default: throw new ClientException("NO LAYER "+layer+" / order "+order);
+                case 0 : list = blocksLayer0_0; break;
+                case 1 : list =  blocksLayer0_1; break;
+                case 2 : list =  blocksLayer0_2; break;
+                case 3 : list = blocksLayer0_3; break;
+                default: throw new ClientException("NO LAYER '"+layer+"' / order '"+order+"'");
             }
         }else if(layer == 1){
             list =  blocksLayer1_0;
@@ -125,7 +130,7 @@ public class Map {
         for(int x=0;x<surface.getBlockX();x++){
             for(int y=0;y<surface.getBlockY();y++){
                 bp = new BlockPosition(origin.getBlockX()+x, origin.getBlockY()+y);
-                result.put(bp, list.get(bp));
+                if(list.containsKey(bp)) result.put(bp, list.get(bp));
             }
         }
 
@@ -145,6 +150,7 @@ public class Map {
             if(blocksLayer0_0.containsKey(position)) list.add(blocksLayer0_0.get(position));
             if(blocksLayer0_1.containsKey(position)) list.add(blocksLayer0_1.get(position));
             if(blocksLayer0_2.containsKey(position)) list.add(blocksLayer0_2.get(position));
+            if(blocksLayer0_3.containsKey(position)) list.add(blocksLayer0_3.get(position));
         }else if(layer == 1){
             if(blocksLayer1_0.containsKey(position)) list.add(blocksLayer1_0.get(position));
         }else{
@@ -163,5 +169,10 @@ public class Map {
         return null;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    
 
 }

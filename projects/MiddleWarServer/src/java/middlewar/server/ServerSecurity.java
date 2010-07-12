@@ -30,7 +30,7 @@ public class ServerSecurity {
             return keys.get(id);
         }
         else{
-            String spc = "spcs"+id;
+            String spc = "MWSC"+String.valueOf(Math.round(Math.random()*10000000))+id;
             keys.put(id, spc);
             return spc;
         }

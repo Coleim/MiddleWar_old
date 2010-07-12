@@ -13,27 +13,31 @@ import middlewar.xmwp.*;
  */
 public class BlockRequestElement extends Element{
 
-    private String world = null;
+    private String map = null;
 
     public BlockRequestElement() throws XMWPException {
         super(ElementType.block, "onReceivedRequestBlock");
     }
 
-    public BlockRequestElement(String world) throws XMWPException {
+    public BlockRequestElement(String map) throws XMWPException {
         super(ElementType.block, "onReceivedRequestBlock");
-        this.world = world;
+        this.map = map;
+    }
+
+    public String getMap() {
+        return map;
     }
 
     @Override
     protected void build(org.w3c.dom.Element root,org.w3c.dom.Document doc) {
         org.w3c.dom.Element elt = doc.createElement(this.type.getTag());
-        elt.setAttribute("world", world);
+        elt.setAttribute("map", map);
         root.appendChild(elt);
     }
 
     @Override
     protected void setAttributes(org.xml.sax.Attributes attributes) {
-        world = attributes.getValue("world");
+        map = attributes.getValue("map");
     }
 
 }

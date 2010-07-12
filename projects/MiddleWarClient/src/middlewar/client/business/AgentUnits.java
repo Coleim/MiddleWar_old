@@ -5,24 +5,78 @@
 
 package middlewar.client.business;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Vector;
 import middlewar.client.business.units.*;
+import middlewar.client.exception.ClientException;
+import middlewar.common.BlockPosition;
 
 /**
  * Board game agent
  * @author higurashi
  */
-public class AgentUnits implements Agent{
+public class AgentUnits extends AbstractAgent{
 
     private UnitBoard units;
-
     private Unit selectedUnit;
 
-    public AgentUnits(UnitBoard units) {
-        this.units = units;
+    /*
+     * Agent management methods
+     */
+
+    private static AgentUnits instance = null;
+
+    public static AgentUnits getInstance() throws ClientException{
+        if(instance == null) throw new ClientException("AgentUnits not initialized (call init())");
+        return instance;
     }
 
-      public void setSelectedUnit(Unit selectedUnit) {
+    public static void init() throws ClientException {
+        instance = new AgentUnits();
+    }
+
+    private AgentUnits() {
+        this.units = new UnitBoard();
+    }
+
+
+    /*
+     * AbstractAgent methods implementation
+     */
+
+    @Override
+    public void addUnit(Unit u) throws ClientException{
+        this.units.addUnit(u);
+    }
+
+    @Override
+    public void modifyUnit(Unit u) throws ClientException {
+        this.units.addUnit(u);
+    }
+
+    @Override
+    public void deleteUnit(String id) throws ClientException {
+        if(unitExist(id)) this.units.removeUnit(id);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e, int x, int y, BlockPosition mapPosition) throws ClientException {
+        Unit u = Game.getAgentUnits().getUnit(mapPosition);
+        if(u != null){
+            if(u.getPlayerId().equals(Game.getInstance().getPlayerId())) {
+                this.setSelectedUnit(units.getUnit(mapPosition));
+            }
+        }
+    }
+
+    /*
+     * Business methods
+     */
+
+    private void setSelectedUnit(Unit selectedUnit) {
         this.selectedUnit = selectedUnit;
     }
 
@@ -30,29 +84,17 @@ public class AgentUnits implements Agent{
         return selectedUnit;
     }
 
-
     public void addUnitSpeak(UnitSpeak us) {
         units.addSpeak(us);
     }
 
-    public Collection<Unit> getUnits() {
-        return units.getUnits().values();
+    public Hashtable<String, Unit> getUnits() {
+        return units.getUnits();
     }
 
-    
-    public UnitBoard getUnitsBoard() {
-        return units;
+    public Vector<UnitSpeak> getSpeaks() {
+        return units.getSpeaks();
     }
-    
-    /**
-     * @see GameAgent
-     */
-    public void stop(){ }
-
-    /**
-     * @see GameAgent
-     */
-    public void start() { }
 
     public Unit getUnit(int x, int y) {
         return this.units.getUnit(x, y);
@@ -62,12 +104,19 @@ public class AgentUnits implements Agent{
         return units.getUnit(unitid);
     }
 
-    public Collection<Unit> getUnitsAtSpeakRange(Unit source) {
-        return units.getUnitsAtSpeakRange(source);
+    public Unit getUnit(BlockPosition mapPosition) {
+        return getUnit(mapPosition.getBlockX(), mapPosition.getBlockY());
     }
 
-    public void addUnit(Unit u) {
-        units.addUnit(u);
+    public boolean unitExist(String id) {
+        return units.unitExist(id);
     }
+
+    public void setFocus(Unit u) {
+        setSelectedUnit(u);
+    }
+
+
+    
     
 }

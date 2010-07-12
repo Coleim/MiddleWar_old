@@ -5,6 +5,13 @@
 
 package middlewar.server.engine;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import middlewar.server.Server;
+import middlewar.server.exception.ServerException;
+import middlewar.xmwp.XMWPException;
+import middlewar.xmwp.elements.inform.HelloInformElement;
+
 /**
  *
  * @author higurashi
@@ -18,15 +25,27 @@ public class GameEngine implements Runnable{
         gameEngineThread = new Thread(this);
         stop = false;
         gameEngineThread.start();
+    }
 
+    public void GameInit() {
+        try {
+
+            Server.unitManager.LoadAllUnits();
+
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
     }
 
     public void run() {
+        GameInit();
         while(!stop){
-
-
-            // todo
-
+            try {
+                // todo
+                Server.xmwpUpdateManager.addUpdateInMap(new HelloInformElement(), "basic1");
+            } catch (XMWPException e) {
+                e.printStackTrace();
+            }
 
 
              try { Thread.sleep(1000); } catch (Exception e) {}

@@ -18,8 +18,7 @@ public abstract class WorldPartBuilder {
 
     public abstract void generate() throws WorldMakerException;
 
-    public WorldPartBuilder() throws WorldMakerException {
-        String name = this.getClass().getName();
+    public WorldPartBuilder(String name) throws WorldMakerException {
         map = new Map(World.MAP_SURFACE,name);
         mb = new MapBuilder(map);
     }
@@ -64,6 +63,10 @@ public abstract class WorldPartBuilder {
 
     protected void addPatternWall(BlockSurface surface, BlockPosition position, SurfaceType type, boolean passing) throws WorldMakerException{
         this.mb.addPatternWall(surface.getBlockX(), surface.getBlockY(), position, type, passing);
+    }
+
+    protected void addSizableElement(BlockPosition position, ElementType element, int x, int y) throws WorldMakerException{
+        this.mb.addSizableElement(position, element, x, y);
     }
 
 }

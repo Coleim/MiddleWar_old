@@ -24,14 +24,13 @@ public interface XMWPLogic {
      */
 
     // Request
-    //public void onReceivedRequestBye(ByeRequestElement element,Message message) throws XMWPException;
-    //public void onReceivedRequestHello(HelloRequestElement element,Message message) throws XMWPException;
     public void onReceivedRequestAck(AckRequestElement element,Message message) throws XMWPException;
-    //public void onReceivedRequestError(ErrorRequestElement element,Message message) throws XMWPException;
     public void onReceivedRequestBlock(BlockRequestElement element,Message message) throws XMWPException;
     public void onReceivedRequestIm(ImRequestElement element,Message message) throws XMWPException;
     public void onReceivedRequestPlayer(PlayerRequestElement element,Message message) throws XMWPException;
     public void onReceivedRequestUnit(UnitRequestElement element,Message message) throws XMWPException;
+    public void onReceivedRequestMove(MoveRequestElement element,Message message) throws XMWPException;
+    public void onReceivedRequestUpdate(UpdateRequestElement element,Message message) throws XMWPException;
 
     // Inform
     public void onReceivedInformBye(ByeInformElement element,Message message) throws XMWPException;

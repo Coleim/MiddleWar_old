@@ -20,5 +20,5 @@ package middlewar.server.worldmaker.business;
  * @author Higurashi
  */
 public enum WorldName {
-basic
+test1,test2
 }

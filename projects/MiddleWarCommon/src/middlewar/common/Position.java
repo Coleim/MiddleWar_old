@@ -77,7 +77,7 @@ public abstract class Position implements Serializable,Comparable<Position>{
 
     @Override
     public int hashCode() {
-        int hash = Integer.parseInt(new String(x+"0"+y));
+        int hash = Integer.parseInt(new String(x+"0"+y).replace("-", ""));
         return hash;
     }
 

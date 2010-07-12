@@ -21,6 +21,8 @@ public enum ElementType {
     block(BlockInformElement.class,BlockRequestElement.class,"xmwp:block"),
     im(ImInformElement.class,ImRequestElement.class,"xmwp:im"),
     player(PlayerInformElement.class,PlayerRequestElement.class,"xmwp:player"),
+    move(null,MoveRequestElement.class,"xmwp:move"),
+    update(null,UpdateRequestElement.class,"xmwp:update"),
     unit(UnitInformElement.class,UnitRequestElement.class,"xmwp:unit");
     
 

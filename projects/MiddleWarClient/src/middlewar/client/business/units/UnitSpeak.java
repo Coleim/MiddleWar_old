@@ -25,7 +25,7 @@ import middlewar.client.exception.DataException;
 public class UnitSpeak {
 
     private String text = null;
-    private Unit unit;
+    private String unitId;
     private Calendar expire;
     private emoticon icon = null;
     private Color fontColor = Color.BLACK;
@@ -37,16 +37,16 @@ public class UnitSpeak {
         expire.add(Calendar.SECOND, 5);
     }
 
-    public UnitSpeak(String text,Unit unit) {
+    public UnitSpeak(String text,String unitId) {
         this();
         this.text = text;
-        this.unit = unit;
+        this.unitId = unitId;
         
     }
 
-    public UnitSpeak(emoticon icon,Unit unit) {
+    public UnitSpeak(emoticon icon,String unitId) {
         this();
-        this.unit = unit;
+        this.unitId = unitId;
         this.icon = icon;
     }
 
@@ -87,12 +87,12 @@ public class UnitSpeak {
         this.text = text;
     }
 
-    public Unit getUnit() {
-        return unit;
+    public String getUnitId() {
+        return unitId;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setUnitId(String unitId) {
+        this.unitId = unitId;
     }
 
     public Image getEmoticon() throws ClientException{

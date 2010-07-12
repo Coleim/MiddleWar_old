@@ -1,40 +1,68 @@
 /*
- * Middle War - Client
+ * Middle War Client
  *
  */
 
 package middlewar.client.business;
 
 import java.awt.Image;
+import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Hashtable;
+import java.util.Vector;
+import middlewar.client.business.units.Unit;
 import middlewar.client.business.world.*;
 import middlewar.client.exception.ClientException;
-import middlewar.common.BlockPosition;
-import middlewar.common.Orientation;
+import middlewar.common.*;
 
 /**
  * World game agent
  * @author higurashi
  */
-public class AgentWorld implements Agent{
+public class AgentWorld extends AbstractAgent{
 
-    private Hashtable<String,World> worlds;
-
-    private String focusWorld;
+    public Hashtable<String,Map> maps = new Hashtable<String,Map>();
+    
     private BlockPosition focusPosition;
-
-
     public static final int X = 13;
     public static final int Y = 13;
 
+    /*
+     * Agent management methods
+     */
 
-    public AgentWorld() {
-        worlds = new Hashtable<String, World>();
-        focusPosition = new BlockPosition(0, 0);
-        focusWorld = "basic";
+    private static AgentWorld instance = null;
+
+    public static AgentWorld getInstance() throws ClientException{
+        if(instance == null) throw new ClientException("AgentWorld not initialized (call init())");
+        return instance;
     }
+
+    public static void init() throws ClientException {
+        instance = new AgentWorld();
+    }
+
+    private AgentWorld() {
+        focusPosition = new BlockPosition(5, 5);
+    }
+
+    /*
+     * AbstractAgent methods implementation
+     */
+
+    @Override
+    public void mouseClicked(MouseEvent e, int x, int y, BlockPosition mapPosition) throws ClientException {
+        Unit u = Game.getAgentUnits().getUnit(mapPosition);
+        if(u != null){
+            if(u.getPlayerId().equals(Game.getInstance().getPlayerId()))
+                focusPosition = mapPosition;
+        }
+    }
+
+    /*
+     * Business methods
+     */
 
     public BlockPosition getFocusPosition() {
         return focusPosition;
@@ -43,16 +71,6 @@ public class AgentWorld implements Agent{
     public void setFocusPosition(BlockPosition focusPosition) {
         this.focusPosition = focusPosition;
     }
-
-    public String getFocusWorld() {
-        return focusWorld;
-    }
-
-    public void setFocusWorld(String focusWorld) {
-        this.focusWorld = focusWorld;
-    }
-
-    
 
     public boolean isPositionFocused(BlockPosition p){
         boolean focus = false;
@@ -63,24 +81,33 @@ public class AgentWorld implements Agent{
         return focus;
     }
 
-
+    /*
     public boolean isBlockPassing(int x, int y){
-        World world = worlds.get(focusWorld);
-        return !( !world.isPassing(x, y, Orientation.UP) &&
-                !world.isPassing(x, y, Orientation.DOWN) &&
-                !world.isPassing(x, y, Orientation.LEFT) &&
-                !world.isPassing(x, y, Orientation.RIGHT));
+        return !( !C.isPassing(x, y, Orientation.UP) &&
+                !C.isPassing(x, y, Orientation.DOWN) &&
+                !C.isPassing(x, y, Orientation.LEFT) &&
+                !C.isPassing(x, y, Orientation.RIGHT));
 
+    }
+
+     */
+
+    public boolean isBlockPassing(BlockPosition mapPosition){
+    //    return isBlockPassing(mapPosition.getBlockX(), mapPosition.getBlockY());
+    return true;
     }
 
     public boolean isBlockInWorld(int x,int y) throws ClientException{
         return x >= 0 && y >=0  && x<AgentWorld.X && y<AgentWorld.Y;
     }
 
-    public void setBlock(int x, int y, int layer, int order, String worldName, String image) throws ClientException {
+    public void setBlock(int x, int y,String map, int layer, int order,String image) throws ClientException {
+        setBlock(x, y, layer, order, maps.get(map), image);
+    }
+
+    private void setBlock(int x, int y, int layer, int order, Map map, String image) throws ClientException {
         try {
-            World world = worlds.get(worldName);
-            world.addImage(Game.getImage(new URL(Game.DATA_URL_BLOCKS + image)),
+            map.addImage(Game.getImage(new URL(Game.DATA_URL_BLOCKS + image)),
                                 x,
                                 y,
                                 layer,
@@ -92,21 +119,23 @@ public class AgentWorld implements Agent{
         }
     }
 
+    public Hashtable<BlockPosition, Image> getBlocksToDraw(int layer, int order) throws ClientException {
 
+        Hashtable<BlockPosition, Image> result = new Hashtable<BlockPosition, Image>();
 
-    /**
-     * @see GameAgent
-     */
-    public void stop(){ }
+        for(Map map : maps.values()){
+            result.putAll(map.getBlocks(layer, order, new BlockPosition(focusPosition.getBlockX()-6, focusPosition.getBlockY()-6), new BlockSurface(X, Y)));
+        }
+        return result;
+    }
 
-    /**
-     * @see GameAgent
-     */
-    public void start() { }
+    public BlockPosition convertBoardPositionToMapPosition(int x,int y) throws ClientException{
+        return new BlockPosition(x+this.getFocusPosition().getBlockX()-(AgentWorld.X/2),
+                                 y+this.getFocusPosition().getBlockY()-(AgentWorld.Y/2));
+    }
 
-    public Hashtable<BlockPosition, Image> getBlocks(int layer, int order) throws ClientException {
-        World world = worlds.get(focusWorld);
-        return world.getBlocks(layer, order);
+    public boolean isBlockInWorld(BlockPosition mapPosition) throws ClientException {
+        return isBlockInWorld(mapPosition.getBlockX(),mapPosition.getBlockY());
     }
 
 }

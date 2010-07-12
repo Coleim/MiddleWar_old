@@ -20,6 +20,8 @@ public class Unit {
     private Orientation orientation;
     private BlockPosition position;
     private String id;
+    private String map;
+    private String playerId;
 
     public Unit(String id) {
         graphics = new Vector<UnitGraphicalPart>();
@@ -27,6 +29,7 @@ public class Unit {
         this.id = id;
         position = new BlockPosition(0, 0);
         orientation = Orientation.DOWN;
+        playerId="unknown";
     }
 
     public BlockPosition getPosition() {
@@ -37,9 +40,15 @@ public class Unit {
         return id;
     }
 
-    public String getUserId() {
-        return "test";
+    public String getPlayerId() {
+        return playerId;
     }
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
+    }
+
+    
 
     public void setId(String id) {
         this.id = id;
@@ -89,6 +98,16 @@ public class Unit {
         return graphics;
     }
 
-    
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
+
+    public void move(int x,int y){
+        this.position= this.position.add(new BlockPosition(x,y));
+    }
 
 }

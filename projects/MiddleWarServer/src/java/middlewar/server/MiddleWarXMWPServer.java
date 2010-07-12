@@ -48,7 +48,7 @@ public class MiddleWarXMWPServer extends HttpServlet {
             String playerId = ServerSecurity.getPlayerId(recv.getKey());
             if(playerId == null) throw new ServerException("You are not logged in (key="+recv.getKey()+")");
 
-            Player p = Server.playerManager.getPlayer(playerId);
+            Player p = Server.playerManager.getPlayerById(playerId);
 
             if(p == null) throw new ServerException("Unknown player (id="+playerId+")");
 

@@ -59,21 +59,10 @@ public class XMWPBaseLogic implements XMWPLogic{
 
     //////////////// req. //////////////////////////////////////////////////////
 
-    //public void onReceivedRequestHello(HelloRequestElement element, Message message) throws XMWPException {
-        // nop
-    //}
-
-    //public void onReceivedRequestBye(ByeRequestElement element, Message message) throws XMWPException {
-        // nop
-    //}
 
     public void onReceivedRequestAck(AckRequestElement element, Message message) throws XMWPException {
-        // nop
+        message.SendAck();
     }
-
-    //public void onReceivedRequestError(ErrorRequestElement element, Message message) throws XMWPException {
-        // nop
-    //}
 
     public void onReceivedRequestBlock(BlockRequestElement element, Message message) throws XMWPException {
         // nop
@@ -88,6 +77,14 @@ public class XMWPBaseLogic implements XMWPLogic{
     }
 
     public void onReceivedRequestUnit(UnitRequestElement element,Message message) throws XMWPException {
+        // nop
+    }
+
+    public void onReceivedRequestMove(MoveRequestElement element,Message message) throws XMWPException {
+        // nop
+    }
+
+    public void onReceivedRequestUpdate(UpdateRequestElement element, Message message) throws XMWPException {
         // nop
     }
 

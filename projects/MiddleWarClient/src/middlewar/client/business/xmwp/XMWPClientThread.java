@@ -1,5 +1,5 @@
 /*
- * Middle War - Client
+ * Middle War Client
  *
  */
 
@@ -18,28 +18,41 @@ import middlewar.xmwp.client.*;
  * Server link (communication)
  * @author higurashi
  */
-public abstract class XMWPClientThread implements Runnable{
+public class XMWPClientThread implements Runnable{
 
-    public static final int historySize = 10; // total (recv + send)
-    public static final int delay = 1000; // inter-messages delay (ms)
+    public static final int historySize = 5; // total (recv + send)
+    public static final int delay = 100; // inter-messages delay (ms)
 
     protected String[] recvRequestHistory = new String[historySize];
     protected String[] sendRequestHistory = new String[historySize];
     protected String[] recvInformHistory = new String[historySize];
     protected String[] sendInformHistory = new String[historySize];
+    protected Date[] recvDateHistory = new Date[historySize];
+    protected Date[] sendDateHistory = new Date[historySize];
 
-    protected int historyIndex = 0;
+    protected int historyIndexSend = 0;
+    protected int historyIndexRecv = 0;
 
     protected ArrayDeque<ClientMessage> messages = new ArrayDeque<ClientMessage>();
 
     protected String serverServletUrl;
     protected String key;
 
-    protected Game game;
+    private Game game = Game.getInstance();
 
     // Thread
     private boolean running;
     private Thread thread;
+
+    /**
+     * Constructor
+     * @param key security key
+     * @param server the server url
+     */
+    public XMWPClientThread(String key,String server) {
+        this.serverServletUrl = server;
+        this.key = key;
+    }
 
     public int getMessageStackSize() {
         return messages.size();
@@ -48,6 +61,10 @@ public abstract class XMWPClientThread implements Runnable{
     public ClientMessage popMessage(){
         if(this.messages.isEmpty()) return null;
         return this.messages.pop();
+    }
+
+    public Game getGame(){
+        return game;
     }
 
     public void pushMessage(ClientMessage message){
@@ -70,22 +87,28 @@ public abstract class XMWPClientThread implements Runnable{
         return sendRequestHistory;
     }
 
+    public Date[] getRecvDateHistory() {
+        return recvDateHistory;
+    }
+
+    public Date[] getSendDateHistory() {
+        return sendDateHistory;
+    }
+
     public void addToSendHistory(String inform,String request) {
-        if(historyIndex == historySize) historyIndex = 0;
-        this.sendInformHistory[historyIndex]=inform;
-        this.sendRequestHistory[historyIndex]=request;
-        this.historyIndex++;
+        if(historyIndexSend == historySize) historyIndexSend = 0;
+        this.sendInformHistory[historyIndexSend]=inform;
+        this.sendRequestHistory[historyIndexSend]=request;
+        this.sendDateHistory[historyIndexSend]=new Date();
+        this.historyIndexSend++;
     }
 
     public void addToRecvHistory(String inform,String request) {
-        if(historyIndex == historySize) historyIndex = 0;
-        this.sendInformHistory[historyIndex]=inform;
-        this.sendRequestHistory[historyIndex]=request;
-        this.historyIndex++;
-    }
-
-    public Game getGame() {
-        return game;
+        if(historyIndexRecv == historySize) historyIndexRecv = 0;
+        this.recvInformHistory[historyIndexRecv]=inform;
+        this.recvRequestHistory[historyIndexRecv]=request;
+        this.recvDateHistory[historyIndexRecv]=new Date();
+        this.historyIndexRecv++;
     }
 
     public void flushMessages() {
@@ -204,6 +227,9 @@ public abstract class XMWPClientThread implements Runnable{
             }
 
         } catch (MalformedURLException e) {
+            // Stop.
+            game.addError(e.getMessage());
+        } catch (Exception e) {
             // Stop.
             game.addError(e.getMessage());
         }

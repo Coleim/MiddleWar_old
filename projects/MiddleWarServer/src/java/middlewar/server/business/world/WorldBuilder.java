@@ -26,9 +26,17 @@ public class WorldBuilder {
 
             switch(name){
 
-                case basic : {
+                case test1 : {
+                    list = new WorldPartBuilder[2][2];
+                    list[0][0] = new test1_0("basic1");        
+                    list[0][1] = new test1_2("basic2");
+                    list[1][1] = new test1_3("basic3");
+                    list[1][0] = new test1_1("basic4");
+                }break;
+
+                case test2 : {
                     list = new WorldPartBuilder[1][1];
-                    list[0][0] = new BasicMap();
+                    list[0][0] = new test1_0("basic5");
                 }break;
                 
             }

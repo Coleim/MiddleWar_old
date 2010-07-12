@@ -33,6 +33,8 @@ public class BlockPosition extends Position{
         boolean isIn = true;
         if(surface.getBlockX() <= this.getBlockX()) isIn = false;
         if(surface.getBlockY() <= this.getBlockY()) isIn = false;
+        if(0 > this.getBlockX()) isIn = false;
+        if(0 > this.getBlockY()) isIn = false;
         return isIn;
     }
 

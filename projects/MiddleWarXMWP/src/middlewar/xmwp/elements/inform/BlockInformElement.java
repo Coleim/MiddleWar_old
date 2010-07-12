@@ -13,7 +13,7 @@ import middlewar.xmwp.*;
  */
 public class BlockInformElement extends Element{
 
-    private String world = null;
+    private String map = null;
     private String image = null;
 
     private int x = 0;
@@ -27,9 +27,9 @@ public class BlockInformElement extends Element{
         super(ElementType.block, "onReceivedInformBlock");
     }
 
-    public BlockInformElement(String world,String image,int x,int y,int order,int layer,boolean passing) throws XMWPException {
+    public BlockInformElement(String map,String image,int x,int y,int order,int layer,boolean passing) throws XMWPException {
         super(ElementType.block, "onReceivedInformBlock");
-        this.world = world;
+        this.map = map;
         this.image = image;
         this.x = x;
         this.y = y;
@@ -50,8 +50,8 @@ public class BlockInformElement extends Element{
         return order;
     }
 
-    public String getWorld() {
-        return world;
+    public String getMap() {
+        return map;
     }
 
     public int getX() {
@@ -69,7 +69,7 @@ public class BlockInformElement extends Element{
     @Override
     protected void build(org.w3c.dom.Element root,org.w3c.dom.Document doc) {
         org.w3c.dom.Element elt = doc.createElement(this.type.getTag());
-        elt.setAttribute("world", world);
+        elt.setAttribute("map", map);
         elt.setAttribute("image", image);
         elt.setAttribute("x", String.valueOf(x));
         elt.setAttribute("y", String.valueOf(y));
@@ -81,7 +81,7 @@ public class BlockInformElement extends Element{
 
     @Override
     protected void setAttributes(org.xml.sax.Attributes attributes) {
-        world = attributes.getValue("world");
+        map = attributes.getValue("map");
         image = attributes.getValue("image");
         x = Integer.valueOf(attributes.getValue("x"));
         y = Integer.valueOf(attributes.getValue("y"));

@@ -45,7 +45,7 @@ response.setContentType("text/html;charset=UTF-8");
             String playerId = ServerSecurity.getPlayerId(key);
             if(key == null || playerId==null) throw new ServerException("invalid key");
 
-            Player p = Server.playerManager.getPlayer(playerId);
+            Player p = Server.playerManager.getPlayerById(playerId);
             p.addXMWPUpdate(new ByeInformElement());
 
              out.println("<html>");

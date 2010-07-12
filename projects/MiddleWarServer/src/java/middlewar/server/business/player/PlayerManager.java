@@ -7,6 +7,7 @@ package middlewar.server.business.player;
 
 import java.util.Hashtable;
 import middlewar.server.Server;
+import middlewar.server.ServerSecurity;
 import middlewar.server.business.unit.Unit;
 import middlewar.server.exception.ServerException;
 
@@ -22,7 +23,7 @@ public class PlayerManager {
         players = new Hashtable<String, Player>();
     }
 
-    public Player getPlayer(String id) throws ServerException{
+    public Player getPlayerById(String id) throws ServerException{
         if(players.containsKey(id)){
             return players.get(id);
         }else{
@@ -32,12 +33,20 @@ public class PlayerManager {
         }
     }
 
+    public Player getPlayerByKey(String key) throws ServerException{
+        return getPlayerById(ServerSecurity.getPlayerId(key));
+    }
+
     public Unit[] getPlayerUnits(Player player){
         return null;
     }
 
     public String[] getPlayerUnitsIds(Player player){
         return player.getUnitsIds();
+    }
+
+    public Iterable<Player> getPlayersConnected() {
+        return players.values();
     }
 
 

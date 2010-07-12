@@ -44,7 +44,7 @@ public class Block implements Serializable,XMWPable {
      */
     public Block(MapPosition position, BlockType type, boolean passing) {
         this.position = position;
-        if(type == null) this.type=BlockType.dev_uu; else this.type = type;
+        /*if(type == null) this.type=BlockType.dev_unknown; else*/ this.type = type;
         this.passing = passing;
     }
 
@@ -62,7 +62,7 @@ public class Block implements Serializable,XMWPable {
      */
     public void setType(BlockType type) {
         this.type = type;
-        if(type == null) this.type=BlockType.dev_uu;
+        /*if(type == null) this.type=BlockType.dev_unknown;*/
     }
 
     /**
