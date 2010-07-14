@@ -42,6 +42,17 @@ public class UnitManager {
         }
     }
 
+    public ArrayList<Unit> getUnits(String playerId) throws ServerException{
+        ArrayList<Unit> list = new ArrayList<Unit>();
+        synchronized(lock){
+            for(Unit u : units.values()){
+                if(u.getPlayerId().equals(playerId)) list.add(u);
+            }
+        }
+        return list;
+    }
+
+
     public ArrayList<Unit> getUnitsInMap(Map  map) throws ServerException, WorldMakerException {
         ArrayList<Unit> list = new ArrayList<Unit>();
         synchronized(lock){

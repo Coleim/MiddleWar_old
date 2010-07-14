@@ -44,7 +44,11 @@ public class MapPosition extends BlockPosition{
 
     @Override
     public int hashCode() {
-        int hash = Integer.parseInt(new String(x+"0"+y+"0"+(layer*order)).replace("-", ""));
+        int a = x;
+        int b = y;
+        if(a<1) a = -a;
+        if(b<1) b = -b;
+        int hash = (int)Long.parseLong(a+"0"+b+"0"+layer+"0"+order);
         return hash;
     }
 

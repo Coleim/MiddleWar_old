@@ -8,6 +8,7 @@ package middlewar.server;
 import middlewar.server.business.player.PlayerManager;
 import middlewar.server.business.unit.UnitManager;
 import middlewar.server.business.world.WorldManager;
+import middlewar.server.data.DataManager;
 import middlewar.server.engine.GameEngine;
 import middlewar.server.xmwp.XMWPUpdateManager;
 

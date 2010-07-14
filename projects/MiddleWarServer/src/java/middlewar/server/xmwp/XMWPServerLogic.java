@@ -257,5 +257,23 @@ public class XMWPServerLogic extends XMWPBaseLogic{
                               focus);
     }
 
+    @Override
+    public void onReceivedInformBye(ByeInformElement element, Message message) throws XMWPException {
+        try {
+
+            // the player
+            Player p = Server.playerManager.getPlayerById(playerId);
+
+            // save into the database
+            Server.playerManager.savePlayer(p);
+
+        } catch (ServerException e) {
+            e.printStackTrace();
+            message.addInform(new ErrorInformElement(e.getMessage()));
+        }
+    }
+
+
+
 
 }

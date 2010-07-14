@@ -49,5 +49,16 @@ public class PlayerManager {
         return players.values();
     }
 
+    public void savePlayer(Player p) throws ServerException {
+        Server.dataManager.savePlayer(p);
+        Server.dataManager.saveUnits(Server.unitManager.getUnits(p.getId()));
+    }
+
+    public void savePlayers() throws ServerException {
+        for(Player p : players.values()){
+            savePlayer(p);
+        }
+    }
+
 
 }

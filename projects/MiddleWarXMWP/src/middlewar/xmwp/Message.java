@@ -101,7 +101,7 @@ public class Message {
             build(); // build the message
             Source xml = new DOMSource(doc);
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            //transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(xml, new StreamResult(out));
         } catch (TransformerException e) {
             throw new XMWPException(e.getMessage());

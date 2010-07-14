@@ -3,7 +3,7 @@
  *
  */
 
-package middlewar.server;
+package middlewar.server.data;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
@@ -29,17 +29,20 @@ public class DataManager {
     private final Object lock = new Object();
 
     private com.mysql.jdbc.Connection link;
-    private String myURL = "jdbc:mysql://127.0.0.1/mw"; //"jdbc:mysql://goblink.kicks-ass.net/mw";
-    private String myLogin = "root"; //"mw";
-    private String myPwd = "mysql"; //"mwpassw";
+    private String myURL = "jdbc:mysql://127.0.0.1/mw";
+    private String myLogin = "root";//"mwuser"
+    private String myPwd = "";//"cRwFPhPcMBeKwzah"
 
     public DataManager(){
-        try {
-    		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-    		link = (Connection) DriverManager.getConnection(myURL,myLogin,myPwd);
-    	} catch (SQLException e) {
-            e.printStackTrace();
-    	}
+        synchronized(lock){
+            try {
+                    DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+                    link = (Connection) DriverManager.getConnection(myURL,myLogin,myPwd);
+            } catch (SQLException e) {
+                System.out.println(">"+myLogin+myPwd);
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -258,6 +261,14 @@ public class DataManager {
             }
             return units;
         }
+    }
+
+    public void savePlayer(Player p) {
+        // todo
+    }
+
+    public void saveUnits(ArrayList<Unit> units) {
+        // todo
     }
 
 }

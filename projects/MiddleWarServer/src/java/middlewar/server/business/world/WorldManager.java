@@ -5,6 +5,7 @@
 
 package middlewar.server.business.world;
 
+import java.util.Hashtable;
 import middlewar.common.BlockPosition;
 import middlewar.common.MapPosition;
 import middlewar.common.Orientation;
@@ -24,7 +25,12 @@ import middlewar.server.worldmaker.business.WorldName;
  */
 public class WorldManager {
 
-    public WorldManager() {}
+    private Hashtable<WorldName,World> worldsCaching;
+
+    public WorldManager() {
+        worldsCaching = new Hashtable<WorldName, World>();
+
+    }
 
     /**
      * Return a map by giving the map name
@@ -43,7 +49,12 @@ public class WorldManager {
      * @throws ServerException
      */
     public World getWorldByName(WorldName name) throws ServerException{
-        return World.loadWord(name);
+        World obj = worldsCaching.get(name);
+        if(obj == null){
+            obj = World.loadWord(name);
+            worldsCaching.put(name, obj);
+        }
+        return obj;
     }
 
     public boolean canMoveUnitTo(Unit u, int x, int y) throws ServerException, WorldMakerException {
