@@ -34,6 +34,7 @@ if(login != null && password != null){
     <script type="text/javascript" src="script_css.js"></script>
     <script type="text/javascript" src="script_ajax.js"></script>
     <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../WorldMaker/wm-common.css" type="text/css" media="screen" />
 </head>
 <body>
 <div id="art-page-background-glare">
@@ -49,10 +50,7 @@ if(login != null && password != null){
                 <!-- header -->
                 <div class="art-Header">
                     <div class="art-Header-jpeg"></div>
-                    <div class="art-Logo">
-                        <b>Middle War</b><br/>
-                        
-                    </div>
+                    <div class="art-Logo"></div>
                 </div>
 
                 <%
@@ -104,7 +102,6 @@ if(login != null && password != null){
 
                 <div class="cleared"></div><div class="art-Footer">
                     <div class="art-Footer-inner">
-                        <a href="#" class="art-rss-tag-icon" title="RSS"></a>
                         <div class="art-Footer-text">
                             <p><a href="#">Contact Us</a> | <a href="#">Terms of Use</a> | <a href="#">Trademarks</a>
                                 | <a href="#">Privacy Statement</a><br />

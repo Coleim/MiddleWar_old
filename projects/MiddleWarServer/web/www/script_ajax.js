@@ -29,11 +29,17 @@ function loadContent(url,div) {
 	if(url != null)
    	{
     	httpRequest.open('GET', url, true);
-        httpRequest.onreadystatechange = function() { setContenuHttpRequest(httpRequest,div); };
+        if(div != null){
+            httpRequest.onreadystatechange = function() { setContenuHttpRequest(httpRequest,div); };
+        }
 	}
 
     httpRequest.send(null);
 
+}
+
+function setInnerHtml(html,div){
+    document.getElementById(div).innerHTML = html;
 }
 
 function setContenuHttpRequest(httpRequest,div) {
@@ -41,25 +47,25 @@ function setContenuHttpRequest(httpRequest,div) {
 	 switch (httpRequest.readyState){
 
 		case 0 :
-            //document.getElementById(div).innerHTML = 'Initialisation en cours...';
+                        document.getElementById(div).innerHTML = 'Initialisation en cours...';
 		break;
 
 		case 1 :
-			//document.getElementById(div).innerHTML = 'Transfert des données en cours...';
+			document.getElementById(div).innerHTML = 'Transfert des données en cours...';
 		break;
 
 		case 2 :
-			//document.getElementById(div).innerHTML = 'Données transferées';
+			document.getElementById(div).innerHTML = 'Données transferées';
 		break;
 
 		case 4 :
 
 		if (httpRequest.status == 200) {
-            document.getElementById(div).innerHTML=httpRequest.responseText;
-        }
-        else {
-            alert('Un problème est survenu avec la requête.');
-        }
+                    document.getElementById(div).innerHTML=httpRequest.responseText;
+                }
+                else {
+                    document.getElementById(div).innerHTML=httpRequest.status;
+                }
 
 		break;
 	}

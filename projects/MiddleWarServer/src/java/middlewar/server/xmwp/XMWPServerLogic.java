@@ -135,16 +135,13 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             Unit u = Server.unitManager.getUnit(element.getId());
 
             // get the inform element describing the unit
-            UnitInformElement e = getUnitInformElement(u,true);
+            UnitInformElement e = u.getXMWPElement(true);
             message.addInform(e);
 
             // tell others players
-            Server.xmwpUpdateManager.addUpdateInMap(getUnitInformElement(u,false), e.getMap(), playerId);
+            Server.xmwpUpdateManager.addUpdateInMap(u.getXMWPElement(false), e.getMap(), playerId);
 
         } catch (ServerException e) {
-            e.printStackTrace();
-            message.addInform(new ErrorInformElement(e.getMessage()));
-        } catch (WorldMakerException e) {
             e.printStackTrace();
             message.addInform(new ErrorInformElement(e.getMessage()));
         }
@@ -167,11 +164,11 @@ public class XMWPServerLogic extends XMWPBaseLogic{
                 u.setPosition(new BlockPosition(element.getX(),element.getY()));
 
                 // get the inform element describing the unit
-                UnitInformElement e = getUnitInformElement(u,true);
+                UnitInformElement e = u.getXMWPElement(true);
                 message.addInform(e);
 
                 // tell others players
-                Server.xmwpUpdateManager.addUpdateInMap(getUnitInformElement(u,false), e.getMap(), playerId);
+                Server.xmwpUpdateManager.addUpdateInMap(u.getXMWPElement(false), e.getMap(), playerId);
 
             }
 
@@ -212,7 +209,7 @@ public class XMWPServerLogic extends XMWPBaseLogic{
                 // Units
                 for(Unit u : Server.unitManager.getUnitsInMap(map)){
                      //if(!u.getPlayerId().equals(playerId))
-                     message.addInform(getUnitInformElement(u,false));
+                     message.addInform(u.getXMWPElement(false));
                 }
 
             }
@@ -234,29 +231,6 @@ public class XMWPServerLogic extends XMWPBaseLogic{
 
     }
 
-    /**
-     * Build a inform element describing an unit
-     * @param u the unit to describe
-     * @return the inform element
-     */
-    private UnitInformElement getUnitInformElement(Unit u,boolean focus) throws ServerException, WorldMakerException, XMWPException{
-        // the world of the unit
-        World w = Server.worldManager.getWorldByName(u.getWorld());
-        // get maps
-        String[] mapsNames = w.getMapForPosition(u.getPosition());
-        // main map
-        String m = mapsNames[0];
-        // build the inform element
-        return 
-        new UnitInformElement(u.getId(),
-                              u.getPlayerId(),
-                              m,
-                              u.getPosition().getBlockX(),
-                              u.getPosition().getBlockY(),
-                              mapsNames,
-                              focus);
-    }
-
     @Override
     public void onReceivedInformBye(ByeInformElement element, Message message) throws XMWPException {
         try {
@@ -273,7 +247,5 @@ public class XMWPServerLogic extends XMWPBaseLogic{
         }
     }
 
-
-
-
+    
 }

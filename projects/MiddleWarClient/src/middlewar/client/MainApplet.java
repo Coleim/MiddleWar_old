@@ -87,6 +87,7 @@ public class MainApplet extends JApplet implements Runnable{
                 game = new Game(getParameter("key"),MiddlewarConfiguration.getXMWPSrvUrl(),this);
                 game.start();
                 vpanel.add(loadPanel);
+                mainPanel.setVisible(false);
                 loadPanel.load();
             }
             catch (GameAlreadyStartedException e) {
@@ -96,12 +97,13 @@ public class MainApplet extends JApplet implements Runnable{
                 errorsPanel.addError(e);
             }
 
-            awv = new AgentWorldView(Game.getAgentWorld());
-            axv = new AgentXMWPView(AgentXMWPView.ViewLevel.all,Game.getAgentXMWP());
-            abv = new AgentBoardView(Game.getAgentBoard());
-            auv = new AgentUnitsView(Game.getAgentUnits());
-
-            mainPanel.setVisible(false);
+            if(awv==null || axv==null || abv==null || auv==null){
+                awv = new AgentWorldView(Game.getAgentWorld());
+                axv = new AgentXMWPView(AgentXMWPView.ViewLevel.all,Game.getAgentXMWP());
+                abv = new AgentBoardView(Game.getAgentBoard());
+                auv = new AgentUnitsView(Game.getAgentUnits());
+            }
+            
             vpanel.add(mainPanel);
             vpanel.add(chatPanel);
 

@@ -7,6 +7,7 @@ package middlewar.server.business.unit;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Vector;
 import middlewar.server.business.player.*;
 import java.util.Hashtable;
 import java.util.Stack;
@@ -25,10 +26,13 @@ import middlewar.server.worldmaker.business.WorldName;
  */
 public class UnitManager {
 
-    private final Object lock = new Object();
-    private Hashtable<String,Unit> units = new Hashtable<String, Unit>();
+    private final Object lock;
+    private Hashtable<String,Unit> units;
 
-    public UnitManager() {}
+    public UnitManager() {
+        units = new Hashtable<String, Unit>();
+        lock = new Object();
+    }
 
     public Unit getUnit(String id) throws ServerException{
         synchronized(lock){
@@ -68,6 +72,17 @@ public class UnitManager {
 
     public void LoadAllUnits() throws ServerException {
         ArrayList<Unit> list = Server.dataManager.getAllUnits();
+        int size = list.size();
+        synchronized(lock){
+            for(int i=0;i<size;i++){
+                Unit u = list.get(i);
+                units.put(u.getId(), u);
+            }
+        }
+    }
+
+    public void LoadPlayerUnits(String playerId) throws ServerException{
+        Vector<Unit> list = Server.dataManager.getPlayerUnits(playerId);
         int size = list.size();
         synchronized(lock){
             for(int i=0;i<size;i++){

@@ -64,12 +64,14 @@ public class AgentUnits extends AbstractAgent{
 
     @Override
     public void mouseClicked(MouseEvent e, int x, int y, BlockPosition mapPosition) throws ClientException {
+        /*
         Unit u = Game.getAgentUnits().getUnit(mapPosition);
         if(u != null){
             if(u.getPlayerId().equals(Game.getInstance().getPlayerId())) {
                 this.setSelectedUnit(units.getUnit(mapPosition));
             }
         }
+        */
     }
 
     /*

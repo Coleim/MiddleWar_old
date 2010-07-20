@@ -1142,6 +1142,7 @@ blockquote
 	cursor: default;
 	text-decoration: none !important;
 	z-index:0;
+        cursor: pointer;
 }
 
 .art-button-wrapper
