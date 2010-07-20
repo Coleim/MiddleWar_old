@@ -38,6 +38,7 @@ public class DataManager {
             try {
                     DriverManager.registerDriver(new com.mysql.jdbc.Driver());
                     link = (Connection) DriverManager.getConnection(myURL,myLogin,myPwd);
+                   
             } catch (SQLException e) {
                 System.out.println(">"+myLogin+myPwd);
                 e.printStackTrace();
@@ -89,6 +90,7 @@ public class DataManager {
                 try{
                     query = this.link.createStatement();
                 }catch (NullPointerException e) {
+                    System.out.println(sql);
                     throw new ServerException("no connection to data base");
                 }
                 answer = query.executeQuery(sql);
