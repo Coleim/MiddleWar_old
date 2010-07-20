@@ -30,8 +30,8 @@ public class DataManager {
 
     private com.mysql.jdbc.Connection link;
     private String myURL = "jdbc:mysql://127.0.0.1/mw";
-    private String myLogin = "root";//"mwuser"
-    private String myPwd = "";//"cRwFPhPcMBeKwzah"
+    private String myLogin = "mwuser";
+    private String myPwd = "cRwFPhPcMBeKwzah";
 
     public DataManager(){
         synchronized(lock){
