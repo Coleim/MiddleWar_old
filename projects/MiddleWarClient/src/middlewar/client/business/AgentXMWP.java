@@ -8,10 +8,7 @@ package middlewar.client.business;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Collection;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import middlewar.client.business.units.Unit;
 import middlewar.client.business.xmwp.*;
 import middlewar.client.exception.ClientException;
@@ -72,6 +69,12 @@ public class AgentXMWP extends AbstractAgent{
                     message.addRequest(new MoveRequestElement(Game.getAgentUnits().getSelectedUnit().getId(), Game.getAgentUnits().getSelectedUnit().getMap(), selected.right().getBlockX(), selected.getBlockY()));
                 } else if (selected.left().equals(mapPosition)) {
                     message.addRequest(new MoveRequestElement(Game.getAgentUnits().getSelectedUnit().getId(), Game.getAgentUnits().getSelectedUnit().getMap(), selected.left().getBlockX(), selected.getBlockY()));
+                }
+                Unit u = Game.getAgentUnits().getUnit(mapPosition);
+                if(u != null){
+                    if(u.getPlayerId().equals(Game.getInstance().getPlayerId())) {
+                        message.addRequest(new UnitRequestElement(u.getId()));
+                    }
                 }
                 this.communicator.pushMessage(message);
             } catch (XMWPException ex) {

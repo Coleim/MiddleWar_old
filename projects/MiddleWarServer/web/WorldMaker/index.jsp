@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="./wm-style.css" rel="stylesheet" type="text/css" />
+        <link href="./wm-common.css" rel="stylesheet" type="text/css" />
         <title>WM doc</title>
     </head>
 
@@ -21,7 +22,7 @@
     <%@page import="middlewar.common.*" %>
 
     <body>
-    <a href="./index.jsp"><img src="./logo.png" class='logo' ></a>
+    <a href="./index.jsp"><img src="./logo.png" class='logo' /></a>
     <br><b>version 1.0 - Doc</b> (<a href="./lib.jsp">index</a>)
     <br><br>
         <ul class="menu">

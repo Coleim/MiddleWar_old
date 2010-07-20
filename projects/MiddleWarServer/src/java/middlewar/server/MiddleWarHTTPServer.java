@@ -5,31 +5,37 @@
 
 package middlewar.server;
 
-import middlewar.xmwp.elements.inform.ByeInformElement;
 import java.io.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import middlewar.server.business.player.Player;
-import middlewar.server.business.player.PlayerManager;
-import middlewar.server.exception.ServerException;
 
-import middlewar.server.xmwp.XMWPServerLogic;
+import middlewar.server.business.player.Player;
+import middlewar.server.business.unit.Unit;
+import middlewar.server.exception.ServerException;
+import middlewar.server.jsp.JspElement;
+import middlewar.server.jsp.elements.PlayerInventoryElement;
 import middlewar.xmwp.*;
-import middlewar.xmwp.server.*;
-import middlewar.xmwp.elements.*;
-import middlewar.xmwp.logic.XMWPLogic;
+import middlewar.xmwp.elements.inform.ErrorInformElement;
 
 /**
- * Server servlet.
+ * HTTP/XMWP Server servlet.
  * @author higurashi
  */
 public class MiddleWarHTTPServer extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     *
+     * Receive HTTP Requests with following parameters
+     * <ul>
+     *  <li><b>key</b> : the user auth key on server</li>
+     *  <li><b>action</b> : the action to execute</li>
+     * </ul>
+     * there may be optionals parameters. The call of the servlet will generate
+     * XMWP message that will be sent to the client.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -37,31 +43,65 @@ public class MiddleWarHTTPServer extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
+        out.print("<html>");
+        try{
 
+            // get the player
             String key = request.getParameter("key");
             String playerId = ServerSecurity.getPlayerId(key);
             if(key == null || playerId==null) throw new ServerException("invalid key");
-
             Player p = Server.playerManager.getPlayerById(playerId);
-            p.addXMWPUpdate(new ByeInformElement());
 
-             out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            try {
 
+                String action = request.getParameter("action");
 
-        } catch (Exception e) {
-            // todo
+                // Focus on a specified unit
+                if(action.equals("focusUnit")){
+
+                    String unitId = request.getParameter("unitId");
+
+                    if(unitId == null) throw new ServerException("need parameter : unitId");
+
+                    Unit u = Server.unitManager.getUnit(unitId);
+
+                    if(u.getPlayerId().equals(playerId)){
+
+                        p.addXMWPUpdate(u.getXMWPElement(true));
+                        out.print("ok");
+
+                    }else throw new ServerException("you can not focus on others players units");
+
+                }
+                else if (action.equals("gethtml")) {
+
+                    String jspelement = request.getParameter("jspelement");
+
+                    if(jspelement.equals("inventory")){
+
+                        JspElement eUnitInv = new PlayerInventoryElement(request, playerId, key);
+                        eUnitInv.printHtml(out);
+
+                    }
+
+                }
+                else throw new ServerException("no action specified");
+                
+            } catch (ServerException e) {
+               p.addXMWPUpdate(new ErrorInformElement(e.getMessage()));
+            }
+
+        } catch(XMWPException e){
             e.printStackTrace();
+        } catch (ServerException e) {
+            e.printStackTrace();
+        } finally {
+            out.print("</html>");
+            out.close();
         }
+        
     }
 
     @Override
@@ -76,13 +116,9 @@ response.setContentType("text/html;charset=UTF-8");
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Middle War XMWP server";
+        return "Middle War HTTP/XMWP server";
     }
 
 }

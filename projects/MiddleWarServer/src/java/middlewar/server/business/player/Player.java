@@ -21,6 +21,7 @@ public class Player {
     private Stack<Element> xmwpUpdatesList = new Stack();
     private Vector<String> xmwpMapWatchList = new Vector<String>();
 
+    private String selectedUnitId = null;
 
     public Player(String id,Vector<String> unitsIds) {
         this.id = id;
@@ -58,5 +59,15 @@ public class Player {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getSelectedUnitId() {
+        return selectedUnitId;
+    }
+
+    public void setSelectedUnitId(String selectedUnitId) {
+        this.selectedUnitId = selectedUnitId;
+    }
+
+    
     
 }

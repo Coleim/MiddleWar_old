@@ -21,7 +21,7 @@ import middlewar.xmwp.client.*;
 public class XMWPClientThread implements Runnable{
 
     public static final int historySize = 5; // total (recv + send)
-    public static final int delay = 100; // inter-messages delay (ms)
+    public static final int delay = 120; // inter-messages delay (ms)
 
     protected String[] recvRequestHistory = new String[historySize];
     protected String[] sendRequestHistory = new String[historySize];

@@ -5,30 +5,32 @@
 
 package middlewar.server;
 
-import middlewar.xmwp.elements.inform.ErrorInformElement;
+
 import java.io.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import middlewar.server.business.player.Player;
 import middlewar.server.exception.ServerException;
-
 import middlewar.server.xmwp.XMWPServerLogic;
 import middlewar.xmwp.*;
 import middlewar.xmwp.server.*;
-import middlewar.xmwp.elements.*;
 import middlewar.xmwp.logic.XMWPLogic;
+import middlewar.xmwp.elements.inform.ErrorInformElement;
 
 /**
- * Server servlet.
+ * XMWP Server servlet.
  * @author higurashi
  */
 public class MiddleWarXMWPServer extends HttpServlet {
    
     /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     *
+     * Receive XMWP messages , and return XMWP messages.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -36,9 +38,8 @@ public class MiddleWarXMWPServer extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/xml;charset=UTF-8");
-
         
+        response.setContentType("text/xml;charset=UTF-8");
 
         try {
            
@@ -60,12 +61,11 @@ public class MiddleWarXMWPServer extends HttpServlet {
             resp.printMessageToStream(response.getOutputStream());
 
         } catch (XMWPException e) {
-            e.printStackTrace();
             sendError(e,response);
         } catch (Exception e) {
-            e.printStackTrace();
             sendError(e,response);
         }
+
     } 
 
     protected void sendError(Exception e,HttpServletResponse response) throws IOException{
@@ -90,10 +90,6 @@ public class MiddleWarXMWPServer extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Middle War XMWP server";

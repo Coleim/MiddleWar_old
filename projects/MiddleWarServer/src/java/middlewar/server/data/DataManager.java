@@ -26,14 +26,19 @@ import middlewar.server.worldmaker.business.WorldName;
  */
 public class DataManager {
 
-    private final Object lock = new Object();
+    private final Object lock;
 
     private com.mysql.jdbc.Connection link;
-    private String myURL = "jdbc:mysql://127.0.0.1/mw";
-    private String myLogin = "mwuser";
-    private String myPwd = "cRwFPhPcMBeKwzah";
-
+    private String myURL = "jdbc:mysql://195.13.32.118/mw";
+    private String myLogin = "mwextuser";//"mwuser"
+    private String myPwd = "cRwFPhPcMBeKwzah";//"cRwFPhPcMBeKwzah"
+    
     public DataManager(){
+        lock = new Object();
+        initConnection();
+    }
+
+    private void initConnection(){
         synchronized(lock){
             try {
                     DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -51,6 +56,7 @@ public class DataManager {
      * @param id the player id
      */
     public Player getPlayer(String id) throws ServerException{
+        initConnection();
         synchronized(lock){
             Player player = null;
             Statement query;
@@ -72,6 +78,7 @@ public class DataManager {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            if(player==null) throw new ServerException("no player with id '"+id+"'");
             return player;
         }
     }
@@ -81,6 +88,7 @@ public class DataManager {
      * @param id the player id
      */
     public boolean verifyPlayerPassword(String id,String password) throws ServerException{
+        initConnection();
         synchronized(lock){
             boolean result = false;
             Statement query;
@@ -112,6 +120,7 @@ public class DataManager {
      *
      */
     public Vector<Unit> getPlayerUnits(String id) throws ServerException{
+        initConnection();
         synchronized(lock){
             Vector<Unit> units = new Vector<Unit>();
             Statement query;
@@ -147,6 +156,7 @@ public class DataManager {
      *
      */
     public Vector<String> getPlayerUnitsIds(String id) throws ServerException{
+        initConnection();
         synchronized(lock){
             Vector<String> units = new Vector<String>();
             Statement query;
@@ -174,6 +184,7 @@ public class DataManager {
 
 
     public Vector<Unit> getWorldUnit(WorldName worldName) throws ServerException {
+        initConnection();
         synchronized(lock){
             Vector<Unit> units = new Vector<Unit>();
             Statement query;
@@ -205,6 +216,7 @@ public class DataManager {
     }
 
     public Unit getUnit(String id) throws ServerException {
+        initConnection();
         synchronized(lock){
             Unit unit = null;
             Statement query;
@@ -235,6 +247,7 @@ public class DataManager {
     }
 
     public ArrayList<Unit> getAllUnits() throws ServerException {
+        initConnection();
         synchronized(lock){
             ArrayList<Unit> units = new ArrayList();
             Statement query;

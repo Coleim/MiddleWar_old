@@ -43,13 +43,13 @@ public class GameEngine implements Runnable{
     public void run() {
         GameInit();
         while(!stop){
-            try {
+            //try {
                 // todo
-                Server.xmwpUpdateManager.addUpdateInMap(new HelloInformElement(), "basic1");
-            } catch (XMWPException e) {
-                e.printStackTrace();
-            }
-
+                //Server.xmwpUpdateManager.addUpdateInMap(new HelloInformElement(), "basic1");
+            //} catch (XMWPException e) {
+            //    e.printStackTrace();
+            //}
+            /*
             try {
                         countLoopPlayersDumps++;
             if(countLoopPlayersDumps==LOOP_PLAYERS_DUMPS){
@@ -61,7 +61,7 @@ public class GameEngine implements Runnable{
                          } catch (ServerException ex) {
                     Logger.getLogger(GameEngine.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+             */
              try { Thread.sleep(1000); } catch (Exception e) {}
 
         }
