@@ -508,7 +508,7 @@ h1.art-Logo-name, h1.art-Logo-name a, h1.art-Logo-name a:link, h1.art-Logo-name 
 {
 	position: relative;
 	margin-bottom: 1px;
-	width: 874px;
+        width: 874px;
 }
 /* end ContentLayout */
 
@@ -1343,7 +1343,7 @@ input, select
 	border: 0;
 	float: left;
 	overflow: hidden;
-	width: 218px;
+	width: 238px;
 }
 /* end LayoutCell */
 
@@ -1354,9 +1354,10 @@ input, select
 	margin: 0;
 	padding: 0;
 	border: 0;
-	float: left;
+	float: right;
 	overflow: hidden;
-	width: 437px;
+	/*width: 437px;*/
+        width: 618px;
 }
 .art-contentLayout .art-content-sidebar1
 {

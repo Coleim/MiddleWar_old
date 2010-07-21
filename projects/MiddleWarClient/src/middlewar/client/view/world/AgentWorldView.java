@@ -49,9 +49,6 @@ public class AgentWorldView extends View{
         Hashtable<BlockPosition,Image> list =  world.getBlocksToDraw(layer,order);
         //System.out.println(">>>"+list.size()+",layer="+layer+",o="+order);
 
-
-
-
         for (BlockPosition p : list.keySet()) {
 
             //if(isFocused(p)){

@@ -1,3 +1,4 @@
+<%@page import="middlewar.common.Constains"%>
 <%@page import="middlewar.server.jsp.elements.PlayerInventoryElement"%>
 <%@page import="middlewar.server.jsp.elements.PlayerUnitsListElement"%>
 <%@page import="middlewar.server.jsp.JspElement"%>
@@ -30,6 +31,8 @@ eUnitList.setJsCallOnClick("eUnitListOnClick();");
 
 <div class="art-contentLayout">
     <div class="art-sidebar1">
+
+        <!-- a -->
         <div class="art-Block">
             <div class="art-Block-tl"></div>
             <div class="art-Block-tr"></div>
@@ -60,34 +63,6 @@ eUnitList.setJsCallOnClick("eUnitListOnClick();");
                 </div>
             </div>
         </div>
-    </div>
-   <div class="art-content">
-        <div class="art-Post">
-            <div class="art-Post-body">
-                <div class="art-Post-inner">
-                    <div class="art-PostContent">
-                    <applet
-                        code = "middlewar.client.MainApplet"
-                        codebase="."
-                        archive= "<%=MiddlewarConfiguration.getClientDistPath()%>,
-                                  <%=MiddlewarConfiguration.getCommonDistPath()%>,
-                                  <%=MiddlewarConfiguration.getXMWPDistPath()%>"
-                        width = "416"
-                        height="496">
-                        <param name="key" value="<%out.print(pkey);%>"/>
-                    </applet>
-                    </div>
-                    <div class="cleared"></div>
-                </div>
-            </div>
-        </div>
-        <div class="art-Post">
-            <div class="art-Post-body">
-                <div class="art-Post-inner"></div>
-            </div>
-        </div>
-    </div>
-    <div class="art-sidebar2">
 
         <!-- units -->
         <div class="art-Block">
@@ -122,15 +97,14 @@ eUnitList.setJsCallOnClick("eUnitListOnClick();");
                             <%
 
                             eUnitList.printHtml(out);
-                            
+
                             %>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
          </div>
-
 
          <!-- inventaire -->
          <div class="art-Block">
@@ -164,5 +138,38 @@ eUnitList.setJsCallOnClick("eUnitListOnClick();");
             </div>
         </div>
 
+   </div>
+
+   <div class="art-content">
+        <div class="art-Post">
+
+                <div class="art-Post-inner">
+                    <div class="art-PostContent">
+                    <applet
+                        code = "middlewar.client.MainApplet"
+                        codebase="."
+                        archive= "<%=MiddlewarConfiguration.getClientDistPath()%>,
+                                  <%=MiddlewarConfiguration.getCommonDistPath()%>,
+                                  <%=MiddlewarConfiguration.getXMWPDistPath()%>"
+                        width = "608"
+                        height="496">
+                        <param name="key" value="<%out.print(pkey);%>"/>
+                    </applet>
+                    </div>
+                    <div class="cleared"></div>
+                </div>
+
+        </div>
+        <div class="art-Post">
+            <div class="art-Post-body">
+                <div class="art-Post-inner"></div>
+            </div>
+        </div>
     </div>
+
+    <!--
+    <div class="art-sidebar2">
+    </div>
+    -->
+    
 </div>

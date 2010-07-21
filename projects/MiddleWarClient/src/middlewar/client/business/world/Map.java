@@ -127,8 +127,10 @@ public class Map {
         }
 
         BlockPosition bp;
-        for(int x=0;x<surface.getBlockX();x++){
-            for(int y=0;y<surface.getBlockY();y++){
+        int sx = surface.getBlockX();
+        int sy = surface.getBlockY();
+        for(int x=0;x<sx;x++){
+            for(int y=0;y<sy;y++){
                 bp = new BlockPosition(origin.getBlockX()+x, origin.getBlockY()+y);
                 if(list.containsKey(bp)) result.put(bp, list.get(bp));
             }
