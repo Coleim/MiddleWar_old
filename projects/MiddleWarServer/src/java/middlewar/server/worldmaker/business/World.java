@@ -132,7 +132,7 @@ public class World implements Serializable{
      * @throws failure.wm.business.WorldException
      */
     private static String[] getMapForPosition(BlockPosition position,Hashtable<BlockPosition,String> worlds) throws WorldMakerException {
-        int margue = 8;
+        int margue = 11;
 
         //if(Constains.debugWorld) System.out.println("[mw] get worlds for position "+position);
 

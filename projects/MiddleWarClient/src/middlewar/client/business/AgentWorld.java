@@ -25,7 +25,7 @@ public class AgentWorld extends AbstractAgent{
     public Hashtable<String,Map> maps = new Hashtable<String,Map>();
     
     private BlockPosition focusPosition;
-    public static final int X = 13;
+    public static final int X = 19;
     public static final int Y = 13;
 
     /*
@@ -126,7 +126,7 @@ public class AgentWorld extends AbstractAgent{
         Hashtable<BlockPosition, Image> result = new Hashtable<BlockPosition, Image>();
 
         for(Map map : maps.values()){
-            result.putAll(map.getBlocks(layer, order, new BlockPosition(focusPosition.getBlockX()-6, focusPosition.getBlockY()-6), new BlockSurface(X, Y)));
+            result.putAll(map.getBlocks(layer, order, new BlockPosition(focusPosition.getBlockX()-(AgentWorld.X/2), focusPosition.getBlockY()-(AgentWorld.Y/2)), new BlockSurface(X, Y)));
         }
         return result;
     }
