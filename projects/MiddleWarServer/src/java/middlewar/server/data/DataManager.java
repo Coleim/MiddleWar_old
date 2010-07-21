@@ -32,7 +32,7 @@ public class DataManager {
     private String myURL = "jdbc:mysql://195.13.32.118/mw";
     private String myLogin = "mwextuser";//"mwuser"
     private String myPwd = "cRwFPhPcMBeKwzah";//"cRwFPhPcMBeKwzah"
-    
+   
     public DataManager(){
         lock = new Object();
         initConnection();

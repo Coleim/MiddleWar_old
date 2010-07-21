@@ -15,7 +15,7 @@ public class LoadPanel extends JPanel implements Runnable{
     private JProgressBar bar;
     private Thread thread;
 
-private ErrorsPanel errorsPanel;
+    private ErrorsPanel errorsPanel;
 
     public LoadPanel( MainApplet master){
         this.setBackground(Color.BLUE);

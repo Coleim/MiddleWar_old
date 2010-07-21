@@ -16,7 +16,7 @@ import middlewar.xmwp.elements.inform.HelloInformElement;
  *
  * @author higurashi
  */
-public class GameEngine implements Runnable{
+public class GameEngine implements Runnable {
 
     private Thread gameEngineThread;
     private boolean stop = false;

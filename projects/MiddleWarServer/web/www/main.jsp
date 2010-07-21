@@ -1,4 +1,4 @@
-<%@page import="middlewar.common.Constains"%>
+<%@page import="middlewar.common.Constants"%>
 <%@page import="middlewar.server.jsp.elements.PlayerInventoryElement"%>
 <%@page import="middlewar.server.jsp.elements.PlayerUnitsListElement"%>
 <%@page import="middlewar.server.jsp.JspElement"%>

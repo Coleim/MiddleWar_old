@@ -74,16 +74,17 @@ public class AgentBoard extends AbstractAgent{
             if(Game.getAgentUnits().getSelectedUnit()!=null){
                 BlockPosition selected = Game.getAgentUnits().getSelectedUnit().getPosition();
 
-                if(selected.up().equals(mapPosition)){
-                        this.setBlockCursor(x, y, true, "up.png");
-                }else if(selected.down().equals(mapPosition)){
-                        this.setBlockCursor(x, y, true, "down.png");
-                }else if(selected.right().equals(mapPosition)){
-                        this.setBlockCursor(x, y, true, "right.png");
-                }else if(selected.left().equals(mapPosition)){
-                        this.setBlockCursor(x, y, true, "left.png");
-                }
+                //TODO: Only display arrows where the player could go.
 
+                if(selected.up().equals(mapPosition)) {
+                    this.setBlockCursor(x, y, true, "up.png");
+                } else if(selected.down().equals(mapPosition)) {
+                    this.setBlockCursor(x, y, true, "down.png");
+                } else if(selected.right().equals(mapPosition)) {
+                    this.setBlockCursor(x, y, true, "right.png");
+                } else if(selected.left().equals(mapPosition)) {
+                    this.setBlockCursor(x, y, true, "left.png");
+                }
             }
 
         //}else board.setBlockCursorVisible(false);

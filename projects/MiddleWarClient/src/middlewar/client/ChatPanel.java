@@ -30,7 +30,7 @@ public class ChatPanel extends JPanel{
 
     private final MainApplet master;
 
-    public ChatPanel(MainApplet master){
+    public ChatPanel(MainApplet master) {
 
         this.master = master;
 

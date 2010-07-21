@@ -40,7 +40,7 @@ public class Unit implements XMWPable{
 
     private Orientation orientation;
 
-    public Unit(String id,String playerId, BlockPosition position, WorldName world, Orientation orientation){
+    public Unit(String id,String playerId, BlockPosition position, WorldName world, Orientation orientation) {
         this.id = id;
         this.position = position;
         this.world = world;
