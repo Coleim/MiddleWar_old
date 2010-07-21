@@ -20,7 +20,7 @@ private ErrorsPanel errorsPanel;
     public LoadPanel( MainApplet master){
         this.setBackground(Color.BLUE);
         this.master = master;
-        this.setPreferredSize(new Dimension(AgentWorld.X*Constains.blockPxSize, AgentWorld.Y*Constains.blockPxSize));
+        this.setPreferredSize(new Dimension(AgentWorld.X*Constants.blockPxSize, AgentWorld.Y*Constants.blockPxSize));
         bar = new JProgressBar();
         this.add(bar);
     }

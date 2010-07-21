@@ -11,7 +11,7 @@ import java.awt.image.ImageObserver;
 import middlewar.client.business.AgentBoard;
 import middlewar.client.business.AgentWorld;
 import middlewar.common.BlockPosition;
-import middlewar.common.Constains;
+import middlewar.common.Constants;
 import middlewar.common.Position;
 import middlewar.client.exception.*;
 
@@ -58,8 +58,8 @@ public class AgentBoardView extends View {
             int w = this.agent.getBlockCursorImage().getWidth(null);
 
             g.drawImage(this.agent.getBlockCursorImage(),
-                        this.agent.getBlockCursorPosition().getPxX()-(w/2)+(Constains.blockPxSize/2),
-                        this.agent.getBlockCursorPosition().getPxY()-(h/2)+(Constains.blockPxSize/2),
+                        this.agent.getBlockCursorPosition().getPxX()-(w/2)+(Constants.blockPxSize/2),
+                        this.agent.getBlockCursorPosition().getPxY()-(h/2)+(Constants.blockPxSize/2),
                         io);
         }
 

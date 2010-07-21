@@ -38,7 +38,7 @@ public class ChatPanel extends JPanel{
         this.textField = new JTextField();
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         this.sendButton = new JButton("Talk!");
-        this.textPane.setPreferredSize(new Dimension(AgentWorld.X*Constains.blockPxSize,60));
+        this.textPane.setPreferredSize(new Dimension(AgentWorld.X*Constants.blockPxSize,60));
         Font font = new Font("Serif", Font.PLAIN, 10);
         this.textPane.setFont(font);
         this.scrollPane = new JScrollPane(this.textPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -47,7 +47,7 @@ public class ChatPanel extends JPanel{
         subpanel.setLayout(new BoxLayout(subpanel,BoxLayout.X_AXIS ));
         subpanel.add(this.textField);
         subpanel.add(this.sendButton);
-        subpanel.setPreferredSize(new Dimension(AgentWorld.X*Constains.blockPxSize, 20));
+        subpanel.setPreferredSize(new Dimension(AgentWorld.X*Constants.blockPxSize, 20));
 
         this.add(this.scrollPane);
         this.add(subpanel);

@@ -56,8 +56,8 @@ public class AgentWorldView extends View{
 
             //if(isFocused(p)){
 
-            int x = p.relativeTo(world.getFocusPosition()).getPxX() + (int)(world.X/2)*Constains.blockPxSize + position.getPxX();
-            int y = p.relativeTo(world.getFocusPosition()).getPxY() + (int)(world.Y/2)*Constains.blockPxSize + position.getPxY();
+            int x = p.relativeTo(world.getFocusPosition()).getPxX() + (int)(world.X/2)*Constants.blockPxSize + position.getPxX();
+            int y = p.relativeTo(world.getFocusPosition()).getPxY() + (int)(world.Y/2)*Constants.blockPxSize + position.getPxY();
 
             if(layer == 0){
             g.drawImage(list.get(p), x, y, io);
