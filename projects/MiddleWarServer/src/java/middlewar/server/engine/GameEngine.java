@@ -7,7 +7,9 @@ package middlewar.server.engine;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import middlewar.common.BlockPosition;
 import middlewar.server.Server;
+import middlewar.server.business.unit.Unit;
 import middlewar.server.exception.ServerException;
 import middlewar.xmwp.XMWPException;
 import middlewar.xmwp.elements.inform.HelloInformElement;
@@ -32,7 +34,6 @@ public class GameEngine implements Runnable {
 
     public void GameInit() {
         try {
-
             Server.unitManager.LoadAllUnits();
 
         } catch (ServerException e) {

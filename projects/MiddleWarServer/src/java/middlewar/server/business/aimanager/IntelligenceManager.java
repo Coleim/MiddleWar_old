@@ -15,18 +15,28 @@ import middlewar.server.business.ai.ArtificialIntelligence;
  */
 public class IntelligenceManager extends Thread {
 
+    private List<ArtificialIntelligence> aiList = new ArrayList<ArtificialIntelligence>();
+    private boolean running = false;
 
-    protected List<ArtificialIntelligence> aiList = new ArrayList<ArtificialIntelligence>();
-
+    private final Object lock;
 
     public IntelligenceManager() {
-        
+        lock = new Object();
     }
 
     @Override
     public void run() {
-        for (ArtificialIntelligence artificialIntelligence : aiList) {
-           artificialIntelligence.live();
+
+        running = true;
+        
+        while( running ) {
+            synchronized(lock) {
+                for (ArtificialIntelligence artificialIntelligence : aiList) {
+                   artificialIntelligence.live();
+                }
+            }
+
+            try { Thread.sleep(1000); } catch (Exception e) {}
         }
     }
 
@@ -34,13 +44,12 @@ public class IntelligenceManager extends Thread {
         boolean addIASuccess = false;
 
         if( !aiList.contains(intelligence) ) {
-            aiList.add(intelligence);
+            synchronized(lock) {
+                aiList.add(intelligence);
+            }
             addIASuccess = true;
         }
-
         return addIASuccess;
     }
-    
-    
-    
+        
 }

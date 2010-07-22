@@ -74,8 +74,6 @@ public class AgentBoard extends AbstractAgent{
             if(Game.getAgentUnits().getSelectedUnit()!=null){
                 BlockPosition selected = Game.getAgentUnits().getSelectedUnit().getPosition();
 
-                //TODO: Only display arrows where the player could go.
-
                 if(selected.up().equals(mapPosition)) {
                     this.setBlockCursor(x, y, true, "up.png");
                 } else if(selected.down().equals(mapPosition)) {

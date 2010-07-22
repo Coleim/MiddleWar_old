@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import middlewar.common.BlockPosition;
 import middlewar.common.Orientation;
 import middlewar.server.Server;
+import middlewar.server.business.ai.ArtificialIntelligence;
 import middlewar.server.business.player.Player;
 import middlewar.server.exception.ServerException;
 import middlewar.server.worldmaker.business.World;
@@ -40,12 +41,15 @@ public class Unit implements XMWPable{
 
     private Orientation orientation;
 
+    private ArtificialIntelligence intelligence;
+    
     public Unit(String id,String playerId, BlockPosition position, WorldName world, Orientation orientation) {
         this.id = id;
         this.position = position;
         this.world = world;
         this.orientation = orientation;
         this.playerId = playerId;
+        this.intelligence = null;
     }
 
     public WorldName getWorld() {
@@ -143,6 +147,20 @@ public class Unit implements XMWPable{
 
     public UnitInformElement getXMWPElement() throws XMWPException {
         return getXMWPElement(true);
+    }
+
+    /**
+     * @return the intelligence
+     */
+    public ArtificialIntelligence getIntelligence() {
+        return intelligence;
+    }
+
+    /**
+     * @param intelligence the intelligence to set
+     */
+    public void setIntelligence(ArtificialIntelligence intelligence) {
+        this.intelligence = intelligence;
     }
 
 
