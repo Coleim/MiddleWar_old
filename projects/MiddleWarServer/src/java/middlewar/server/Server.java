@@ -5,6 +5,8 @@
 
 package middlewar.server;
 
+import middlewar.server.business.aimanager.AIEngine;
+import middlewar.server.business.aimanager.IntelligenceManager;
 import middlewar.server.business.player.PlayerManager;
 import middlewar.server.business.unit.UnitManager;
 import middlewar.server.business.world.WorldManager;
@@ -26,5 +28,5 @@ public class Server {
     public static final WorldManager worldManager = new WorldManager();
     public static final XMWPUpdateManager xmwpUpdateManager = new XMWPUpdateManager();
     public static final GameEngine gameEngine = new GameEngine();
-    
+    public static final AIEngine aiEngine = new AIEngine();
 }

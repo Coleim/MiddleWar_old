@@ -164,8 +164,8 @@ public class Game implements Agent{
      * @see MouseEvent
      */
     public void mouseEntered(MouseEvent e) throws ClientException {
-        int x = (int)(e.getX()/Constains.blockPxSize);
-        int y = (int)(e.getY()/Constains.blockPxSize);
+        int x = (int)(e.getX()/Constants.blockPxSize);
+        int y = (int)(e.getY()/Constants.blockPxSize);
         this.mouseEntered(e, x, y,getAgentWorld().convertBoardPositionToMapPosition(x,y));
     }
 
@@ -173,8 +173,8 @@ public class Game implements Agent{
      * @see MouseEvent
      */
     public void mouseExited(MouseEvent e) throws ClientException {
-        int x = (int)(e.getX()/Constains.blockPxSize);
-        int y = (int)(e.getY()/Constains.blockPxSize);
+        int x = (int)(e.getX()/Constants.blockPxSize);
+        int y = (int)(e.getY()/Constants.blockPxSize);
         this.mouseExited(e, x, y,getAgentWorld().convertBoardPositionToMapPosition(x,y));
     }
 
@@ -182,8 +182,8 @@ public class Game implements Agent{
      * @see MouseEvent
      */
     public void mouseClicked(MouseEvent e) throws ClientException {
-        int x = (int)(e.getX()/Constains.blockPxSize);
-        int y = (int)(e.getY()/Constains.blockPxSize);
+        int x = (int)(e.getX()/Constants.blockPxSize);
+        int y = (int)(e.getY()/Constants.blockPxSize);
         this.mouseClicked(e, x, y,getAgentWorld().convertBoardPositionToMapPosition(x,y));
     }
 
@@ -191,8 +191,8 @@ public class Game implements Agent{
      * @see MouseEvent
      */
     public void mouseMoved(MouseEvent e) throws ClientException {
-        int x = (int)(e.getX()/Constains.blockPxSize);
-        int y = (int)(e.getY()/Constains.blockPxSize);
+        int x = (int)(e.getX()/Constants.blockPxSize);
+        int y = (int)(e.getY()/Constants.blockPxSize);
         this.mouseMoved(e, x, y,getAgentWorld().convertBoardPositionToMapPosition(x,y));
     }
 

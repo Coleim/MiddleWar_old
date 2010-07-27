@@ -21,7 +21,7 @@ public class MainPanel extends JPanel implements MouseListener,MouseMotionListen
         this.master = main;
 
         this.setBackground(Color.BLACK);
-        this.setPreferredSize(new Dimension(AgentWorld.X*Constains.blockPxSize, AgentWorld.Y*Constains.blockPxSize));
+        this.setPreferredSize(new Dimension(AgentWorld.X*Constants.blockPxSize, AgentWorld.Y*Constants.blockPxSize));
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.addKeyListener(this);

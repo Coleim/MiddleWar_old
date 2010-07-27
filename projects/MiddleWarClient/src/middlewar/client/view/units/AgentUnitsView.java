@@ -55,7 +55,7 @@ public class AgentUnitsView extends View{
                 Position p = agent.getUnit(speak.getUnitId()).getPosition().relativeTo(Game.getAgentWorld().getFocusPosition());
                 p=p.add(new BlockPosition((int)AgentWorld.X/2,(int)AgentWorld.Y/2)); // center
                 p=p.add(position);
-                p=p.add(new PxPosition(Constains.blockPxSize/2, 0));
+                p=p.add(new PxPosition(Constants.blockPxSize/2, 0));
                 usv.paint(g, io, p);
             }
             

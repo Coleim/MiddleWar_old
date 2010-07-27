@@ -14,8 +14,10 @@ import java.util.Stack;
 import middlewar.common.BlockPosition;
 import middlewar.common.BlockSurface;
 import middlewar.common.MapPosition;
+import middlewar.common.Orientation;
 import middlewar.common.Position;
 import middlewar.server.Server;
+import middlewar.server.business.ai.BasicalIntelligence;
 import middlewar.server.exception.ServerException;
 import middlewar.server.worldmaker.business.Map;
 import middlewar.server.worldmaker.business.WorldMakerException;
@@ -80,6 +82,15 @@ public class UnitManager {
                 units.put(u.getId(), u);
             }
         }
+
+        Unit iaUnit = new Unit("AI__1", "AI", new BlockPosition(16,7), WorldName.valueOf("test1"), Orientation.DOWN );
+
+        BasicalIntelligence basicIntelligence = new BasicalIntelligence(iaUnit);
+        iaUnit.setIntelligence(basicIntelligence);
+        if ( !Server.aiEngine.addBasicalIntelligence(basicIntelligence) ) {
+             throw new UnsupportedOperationException("Cannot add IA.");
+        }
+        units.put(iaUnit.getId(), iaUnit);
     }
 
     public void LoadPlayerUnits(String playerId) throws ServerException{
@@ -109,5 +120,4 @@ public class UnitManager {
             return result;
         }
     }
-
 }

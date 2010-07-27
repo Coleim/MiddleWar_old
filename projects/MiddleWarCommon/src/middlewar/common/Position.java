@@ -37,11 +37,11 @@ public abstract class Position implements Serializable,Comparable<Position>{
     }
 
      public int getBlockX() {
-        return x/Constains.blockPxSize;
+        return x/Constants.blockPxSize;
     }
 
     public int getBlockY() {
-        return y/Constains.blockPxSize;
+        return y/Constants.blockPxSize;
     }
 
     public void setPxX(int x) {
@@ -53,11 +53,11 @@ public abstract class Position implements Serializable,Comparable<Position>{
     }
 
      public void setBlockX(int x) {
-        this.x = x*Constains.blockPxSize;
+        this.x = x*Constants.blockPxSize;
     }
 
     public void setBlockY(int y) {
-        this.y = y*Constains.blockPxSize;
+        this.y = y*Constants.blockPxSize;
     }
 
     public int compareTo(Position p) {

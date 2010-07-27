@@ -19,7 +19,8 @@ public class UnitsPanel extends JPanel{
         private MainApplet master;
         public UnitsPanel(MainApplet master){
             this.master = master;
-            this.setPreferredSize(new Dimension(100,AgentWorld.Y*Constains.blockPxSize));
+            this.setPreferredSize(new Dimension(100,AgentWorld.Y*Constants.blockPxSize));
+            this.setBackground(Color.red);
         }
 
         @Override

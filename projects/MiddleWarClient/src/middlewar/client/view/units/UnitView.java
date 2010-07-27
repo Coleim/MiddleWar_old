@@ -40,7 +40,7 @@ public class UnitView extends View{
         Image shadow = Game.getImage(UnitGraphicalPart.getShadowUrl());
         int h = shadow.getHeight(null);
         int w = shadow.getWidth(null);
-        g.drawImage(shadow, position.getPxX()-(w/2)+(Constains.blockPxSize/2), position.getPxY()+Constains.blockPxSize-(Constains.blockPxSize/2)-vdec+3, io);
+        g.drawImage(shadow, position.getPxX()-(w/2)+(Constants.blockPxSize/2), position.getPxY()+Constants.blockPxSize-(Constants.blockPxSize/2)-vdec+3, io);
 
         // Graph. parts
         for (int o = 0; o <= unit.getMaxOrder(); o++) {
