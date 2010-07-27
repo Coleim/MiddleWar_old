@@ -1,6 +1,6 @@
 /*
  * Middle War - Client
- * version 1.0
+ * 
  */
 
 package middlewar.client.business.units;

@@ -39,6 +39,7 @@ public class UnitManager {
 
     public Unit getUnit(String id) throws ServerException{
         synchronized(lock){
+            if(units==null) throw new ServerException("units table not initialized");
             if(units.containsKey(id)){
                 return units.get(id);
             }else{

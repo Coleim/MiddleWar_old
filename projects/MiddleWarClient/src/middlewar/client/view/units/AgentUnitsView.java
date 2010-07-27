@@ -48,6 +48,7 @@ public class AgentUnitsView extends View{
                 g.drawString("<"+unit.getPlayerId()+">", p.getPxX(), p.getPxY()+10);
             }
         }
+        
         for(UnitSpeak speak : agent.getSpeaks()){
             
             if(!speak.isExpired()){

@@ -1,26 +1,24 @@
 /*
  * Middle War - Client
- * version 1.0
+ *
  */
 
 package middlewar.client.view.units;
 
-import middlewar.client.view.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.image.*;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import java.util.Vector;
 import middlewar.client.business.Game;
+
+import middlewar.client.view.*;
 import middlewar.common.*;
 import middlewar.client.business.units.*;
-
 import middlewar.client.exception.ClientException;
-import middlewar.client.exception.DataException;
 
 /**
- * Unit designer
+ * Unit speak designer
  * @author higurashi
  */
 public class UnitSpeakView extends View{
@@ -34,36 +32,38 @@ public class UnitSpeakView extends View{
     @Override
     public void paint(Graphics g, ImageObserver io, Position position) throws ClientException {
 
-        //Unit unit = unitSpeak.getUnit();
-        int lines = 1;
         int length = 2;
-        String[] linesContent = null;
-        
+        int wordsInLine = 3;
+
+        try{
+
+        String text = unitSpeak.getText();
+        StringTokenizer st = new StringTokenizer(text, " ");
+        ArrayList<String> lines = new ArrayList<String>();
 
         if(unitSpeak.getIcon() != null){
-
             length = 2;
-
-        }else
-
-        if(unitSpeak.getText() != null){
-
-        linesContent = unitSpeak.getText().split("\n");
-        int k = 0;
-        for(String line : linesContent){
-           
-            lines++;
-            if(length<line.length()) length = line.length();
-
+            lines.add("");
         }
-        
+        else if(text != null){
+
+            while(st.hasMoreTokens()){
+                String line = new String();
+                for(int i=0;i<wordsInLine;i++){
+                    if(!st.hasMoreTokens()) break;
+                    line += st.nextToken() + " ";
+                }
+                if(line.length()>length) length = line.length();
+                lines.add(line);
+            }
+            
         }
 
         g.setColor(Color.DARK_GRAY);
         g.fillRoundRect(position.getPxX()+2,
-                        position.getPxY()-lines*10-30+2,
-                        length*10+10,
-                        lines*10+14,
+                        position.getPxY()-lines.size()*10-30+2,
+                        length*9+10,
+                        lines.size()*10+14,
                         20,
                         20);
         Polygon p = new Polygon();
@@ -74,9 +74,9 @@ public class UnitSpeakView extends View{
 
         g.setColor(unitSpeak.getBackgroundColor());
         g.fillRoundRect(position.getPxX(),
-                        position.getPxY()-lines*10-30,
-                        length*10+10,
-                        lines*10+14,
+                        position.getPxY()-lines.size()*10-30,
+                        length*9+10,
+                        lines.size()*10+14,
                         20,
                         20);
         p = new Polygon();
@@ -85,31 +85,32 @@ public class UnitSpeakView extends View{
         p.addPoint(position.getPxX()+25, position.getPxY()-30);
         g.fillPolygon(p);
 
-
         if(unitSpeak.getIcon() != null){
 
             g.drawImage(unitSpeak.getEmoticon(),
                      position.getPxX()+7,
                      position.getPxY()-35,io);
 
-        }else
-        if(unitSpeak.getText() != null){
-
-        g.setColor(unitSpeak.getFontColor());
-        g.setFont(new Font(Font.SANS_SERIF, Font.TRUETYPE_FONT, 14));
-
-        int k = 0;
-        for(int i=linesContent.length-1;i>=0;i--){
-        g.drawString(linesContent[i],
-                     position.getPxX()+7,
-                     position.getPxY()-k*12-23);
-        k ++;
+        }else if(text != null){
+            g.setColor(unitSpeak.getFontColor());
+            g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+            int k = 0;
+            for(int i=lines.size()-1;i>=0;i--){
+                g.drawString(lines.get(i),
+                             position.getPxX()+7,
+                             position.getPxY()-k*12-23);
+                k ++;
+            }
         }
 
-        }
-        
+    
+
+    }catch(Exception e){
+        Game.getInstance().addInfo(">>"+e.getMessage());
 
     }
+    }
+
 
 }
 
