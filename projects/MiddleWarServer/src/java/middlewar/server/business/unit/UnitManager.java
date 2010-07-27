@@ -13,6 +13,7 @@ import java.util.Hashtable;
 import java.util.Stack;
 import middlewar.common.BlockPosition;
 import middlewar.common.BlockSurface;
+import middlewar.common.MapPosition;
 import middlewar.common.Position;
 import middlewar.server.Server;
 import middlewar.server.exception.ServerException;

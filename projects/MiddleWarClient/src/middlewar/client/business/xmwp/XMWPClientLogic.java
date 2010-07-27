@@ -126,4 +126,32 @@ public class XMWPClientLogic extends XMWPBaseLogic{
 
     }
 
+    @Override
+    public void onReceivedInformMove(MoveInformElement element, Message message) throws XMWPException {
+        try {
+
+            String map = element.getMap();
+
+            if(Game.getAgentUnits().unitExist(element.getId())){
+                Unit u = Game.getAgentUnits().getUnit(element.getId());
+                u.setX(element.getX());
+                u.setY(element.getY());
+                u.setMap(map);
+                game.modifyUnit(u);
+            }
+
+            if(!Game.getAgentWorld().maps.containsKey(map)){
+                Game.getAgentWorld().maps.put(map, new Map(map));
+                message.addRequest(new BlockRequestElement(map));
+                message.addRequest(new UpdateRequestElement(map,true));
+            }
+
+        } catch (ClientException e) {
+            game.addError(e.getMessage());
+        }
+
+    }
+
+
+
 }

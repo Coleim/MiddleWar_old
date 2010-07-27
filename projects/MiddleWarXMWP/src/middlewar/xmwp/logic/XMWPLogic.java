@@ -41,6 +41,7 @@ public interface XMWPLogic {
     public void onReceivedInformIm(ImInformElement element,Message message) throws XMWPException;
     public void onReceivedInformPlayer(PlayerInformElement element,Message message) throws XMWPException;
     public void onReceivedInformUnit(UnitInformElement element,Message message) throws XMWPException;
+    public void onReceivedInformMove(MoveInformElement element,Message message) throws XMWPException;
 
     // generic
     public abstract void onReceived(Element elt, Message message) throws XMWPException;

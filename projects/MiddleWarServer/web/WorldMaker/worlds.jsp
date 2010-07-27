@@ -15,6 +15,7 @@
     <%@page import="middlewar.common.*" %>
 
     <link href="./wm-style.css" rel="stylesheet" type="text/css" />
+    <link href="./wm-common.css" rel="stylesheet" type="text/css" />
     <body>
     <a href="./index.jsp"><img src="./logo.png" class='logo' ></a>
     <br><b>World</b> (<a href="./index.jsp">index</a>)

@@ -1,0 +1,11 @@
+.world{
+}
+.world_block{
+    /*width: 32px;*/
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    padding-top:0px;
+    border:	0px;
+    z-index:8;
+}

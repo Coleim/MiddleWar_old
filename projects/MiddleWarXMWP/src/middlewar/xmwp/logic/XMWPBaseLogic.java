@@ -57,6 +57,10 @@ public class XMWPBaseLogic implements XMWPLogic{
         // nop
     }
 
+    public void onReceivedInformMove(MoveInformElement element, Message message) throws XMWPException {
+        // nop
+    }
+
     //////////////// req. //////////////////////////////////////////////////////
 
 
@@ -87,6 +91,8 @@ public class XMWPBaseLogic implements XMWPLogic{
     public void onReceivedRequestUpdate(UpdateRequestElement element, Message message) throws XMWPException {
         // nop
     }
+
+
 
 
 
