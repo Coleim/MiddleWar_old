@@ -5,49 +5,38 @@
 
 package middlewar.server.business.world;
 
-import java.util.Hashtable;
-import middlewar.common.BlockPosition;
-import middlewar.common.MapPosition;
-import middlewar.common.Orientation;
+import java.util.EnumMap;
+import middlewar.common.*;
+import middlewar.server.Server;
 import middlewar.server.business.unit.Unit;
 import middlewar.server.exception.ServerException;
-import middlewar.server.worldmaker.business.Block;
-import middlewar.server.worldmaker.business.BlockCollision;
-import middlewar.server.worldmaker.business.Map;
-import middlewar.server.worldmaker.business.World;
-import middlewar.server.worldmaker.business.WorldMakerException;
-import middlewar.server.worldmaker.business.WorldName;
-
+import middlewar.server.worldmaker.business.*;
+import middlewar.server.managers.IWorldManager;
 
 /**
  * Manage worlds
  * @author higurashi
  */
-public class WorldManager {
+public class WorldManager implements IWorldManager{
 
-    private Hashtable<WorldName,World> worldsCaching;
-
-    public WorldManager() {
-        worldsCaching = new Hashtable<WorldName, World>();
-
-    }
+    private EnumMap<WorldName,World> worldsCaching;
 
     /**
-     * Return a map by giving the map name
-     * @param name the name of the map
-     * @return the map
-     * @throws ServerException
+     * Initialise the manager
      */
+    public WorldManager() {
+        Server.logs.logMainInfo("start WorldManager");
+        worldsCaching = new EnumMap<WorldName, World>(WorldName.class);
+        Server.logs.logInfo("WorldManager started");
+    }
+
+    @Override
     public Map getMapByName(String name) throws ServerException{
+        Server.logs.logInfo("[WorldManager] getMapByName "+name);
         return World.loadMap(name);
     }
 
-    /**
-     * Return a world by giving the world name
-     * @param name the name of the world
-     * @return the world
-     * @throws ServerException
-     */
+    @Override
     public World getWorldByName(WorldName name) throws ServerException{
         World obj = worldsCaching.get(name);
         if(obj == null){
@@ -57,6 +46,7 @@ public class WorldManager {
         return obj;
     }
 
+    @Override
     public boolean canMoveUnitTo(Unit u, int x, int y) throws ServerException, WorldMakerException {
         boolean ret = true;
         World w = getWorldByName(u.getWorld());

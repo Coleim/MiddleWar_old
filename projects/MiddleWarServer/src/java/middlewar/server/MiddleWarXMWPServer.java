@@ -38,12 +38,16 @@ public class MiddleWarXMWPServer extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+
+        Server.logs.logInfo("XMWPServer called by "+request.getRemoteAddr());
         
         response.setContentType("text/xml;charset=UTF-8");
 
         try {
            
             Message recv = Message.parseMessageFromStream(request.getInputStream());
+
+            Server.logs.logDebug("XMWPServer recv : "+recv+" from "+request.getRemoteAddr());
 
             // get player ID from key
             String playerId = ServerSecurity.getPlayerId(recv.getKey());
@@ -60,21 +64,34 @@ public class MiddleWarXMWPServer extends HttpServlet {
 
             resp.printMessageToStream(response.getOutputStream());
 
+            Server.logs.logDebug("XMWPServer send : "+resp+" to "+request.getRemoteAddr()+"("+playerId+")");
+
         } catch (XMWPException e) {
             sendError(e,response);
+            Server.logs.logError(e,this.getClass().getSimpleName());
+        } catch (ServerException e) {
+            sendError(e,response);
+            Server.logs.logError(e,this.getClass().getSimpleName());
         } catch (Exception e) {
             sendError(e,response);
+            Server.logs.logError(e);
         }
 
     } 
 
+    /**
+     * Send a XMWP error
+     * @param e the error to send
+     * @param response HttpServletResponse
+     * @throws IOException
+     */
     protected void sendError(Exception e,HttpServletResponse response) throws IOException{
          try {
                 Message resp = new ServerMessage();
                 resp.addInform(new ErrorInformElement(e.getClass().getName()+" > "+e.getMessage()));
                 resp.printMessageToStream(response.getOutputStream());
             } catch (XMWPException xmwpe) {
-                // todo log
+                Server.logs.logError(xmwpe,this.getClass().getSimpleName()+"_sendError");
             }
     }
 

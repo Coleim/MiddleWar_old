@@ -11,8 +11,4 @@ package middlewar.server.business.world;
  */
 public class WorldRule {
 
-
-
-
-
 }

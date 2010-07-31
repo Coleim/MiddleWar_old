@@ -11,11 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Vector;
-import middlewar.common.BlockPosition;
-import middlewar.common.Orientation;
-import middlewar.server.business.player.Player;
-import middlewar.server.business.unit.Unit;
+import middlewar.common.*;
+import middlewar.server.managers.IDataManager;
+import middlewar.server.Server;
 import middlewar.server.exception.ServerException;
 import middlewar.server.worldmaker.business.WorldName;
 
@@ -24,7 +22,7 @@ import middlewar.server.worldmaker.business.WorldName;
  * base de donnée MySQL: 5.0
  * @author higurashi
  */
-public class DataManager {
+public class DataManager implements IDataManager{
 
     private final Object lock;
 
@@ -32,10 +30,15 @@ public class DataManager {
     private String myURL = "jdbc:mysql://195.13.32.118/mw";
     private String myLogin = "mwextuser";//"mwuser"
     private String myPwd = "cRwFPhPcMBeKwzah";//"cRwFPhPcMBeKwzah"
-   
+
+    /**
+     * Initialise the manager
+     */
     public DataManager(){
+        Server.logs.logMainInfo("start DataManager");
         lock = new Object();
         initConnection();
+        Server.logs.logInfo("DataManager started");
     }
 
     private void initConnection(){
@@ -43,22 +46,17 @@ public class DataManager {
             try {
                     DriverManager.registerDriver(new com.mysql.jdbc.Driver());
                     link = (Connection) DriverManager.getConnection(myURL,myLogin,myPwd);
-                   
             } catch (SQLException e) {
-                System.out.println(">"+myLogin+myPwd);
-                e.printStackTrace();
+                Server.logs.logError(e);
             }
         }
     }
 
-    /**
-     * Get an user from database
-     * @param id the player id
-     */
-    public Player getPlayer(String id) throws ServerException{
+    @Override
+    public DAOPlayer getPlayer(String id) throws ServerException{
         initConnection();
         synchronized(lock){
-            Player player = null;
+            DAOPlayer player = null;
             Statement query;
             ResultSet answer;
             String sql = "SELECT * FROM `players` WHERE playerId='"+id+"';";
@@ -71,22 +69,19 @@ public class DataManager {
                 answer = query.executeQuery(sql);
                 if (answer.next()!=false) {
                     if (answer.wasNull() == false) {
-                        player = new Player(answer.getString("playerId"),this.getPlayerUnitsIds(id));
+                        player = new DAOPlayer(answer.getString("playerId"),this.getPlayerUnitsIds(id));
                     }
                 }
                 answer.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Server.logs.logError(e);
             }
             if(player==null) throw new ServerException("no player with id '"+id+"'");
             return player;
         }
     }
 
-    /**
-     * Verify a player password
-     * @param id the player id
-     */
+    @Override
     public boolean verifyPlayerPassword(String id,String password) throws ServerException{
         initConnection();
         synchronized(lock){
@@ -109,20 +104,17 @@ public class DataManager {
                 }
                 answer.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Server.logs.logError(e);
             }
             return result;
         }
     }
 
-    /**
-     * Get units
-     *
-     */
-    public Vector<Unit> getPlayerUnits(String id) throws ServerException{
+    @Override
+    public ArrayList<DAOUnit> getPlayerUnits(String id) throws ServerException{
         initConnection();
         synchronized(lock){
-            Vector<Unit> units = new Vector<Unit>();
+            ArrayList<DAOUnit> units = new ArrayList<DAOUnit>();
             Statement query;
             ResultSet answer;
             String sql = "SELECT * FROM `units` WHERE playerId='"+id+"';";
@@ -135,7 +127,7 @@ public class DataManager {
                 answer = query.executeQuery(sql);
                 while (answer.next()!=false) {
                     if (answer.wasNull() == false) {
-                        units.add(new Unit(answer.getString("unitId"),
+                        units.add(new DAOUnit(answer.getString("unitId"),
                                            id,
                                            new BlockPosition(answer.getInt("x"),answer.getInt("y")),
                                            WorldName.valueOf(answer.getString("world")),
@@ -145,20 +137,17 @@ public class DataManager {
                 }
                 answer.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Server.logs.logError(e);
             }
             return units;
         }
     }
 
-    /**
-     * Get units
-     *
-     */
-    public Vector<String> getPlayerUnitsIds(String id) throws ServerException{
+    @Override
+    public ArrayList<String> getPlayerUnitsIds(String id) throws ServerException{
         initConnection();
         synchronized(lock){
-            Vector<String> units = new Vector<String>();
+            ArrayList<String> units = new ArrayList<String>();
             Statement query;
             ResultSet answer;
             String sql = "SELECT unitId FROM `units` WHERE playerId='"+id+"';";
@@ -176,17 +165,17 @@ public class DataManager {
                 }
                 answer.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Server.logs.logError(e);
             }
             return units;
         }
     }
 
-
-    public Vector<Unit> getWorldUnit(WorldName worldName) throws ServerException {
+    @Override
+    public ArrayList<DAOUnit> getWorldUnits(WorldName worldName) throws ServerException {
         initConnection();
         synchronized(lock){
-            Vector<Unit> units = new Vector<Unit>();
+            ArrayList<DAOUnit> units = new ArrayList<DAOUnit>();
             Statement query;
             ResultSet answer;
             String sql = "SELECT * FROM `units` WHERE world='"+worldName.toString()+"';";
@@ -199,7 +188,7 @@ public class DataManager {
                 answer = query.executeQuery(sql);
                 while (answer.next()!=false) {
                     if (answer.wasNull() == false) {
-                        units.add(new Unit(answer.getString("unitId"),
+                        units.add(new DAOUnit(answer.getString("unitId"),
                                            answer.getString("playerId"),
                                            new BlockPosition(answer.getInt("x"),answer.getInt("y")),
                                            WorldName.valueOf(answer.getString("world")),
@@ -209,16 +198,17 @@ public class DataManager {
                 }
                 answer.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Server.logs.logError(e);
             }
             return units;
         }
     }
-
-    public Unit getUnit(String id) throws ServerException {
+    
+    @Override
+    public DAOUnit getUnit(String id) throws ServerException {
         initConnection();
         synchronized(lock){
-            Unit unit = null;
+            DAOUnit unit = null;
             Statement query;
             ResultSet answer;
             String sql = "SELECT * FROM `units` WHERE unitId='"+id+"';";
@@ -231,7 +221,7 @@ public class DataManager {
                 answer = query.executeQuery(sql);
                 if (answer.next()!=false) {
                     if (answer.wasNull() == false) {
-                        unit = new Unit(answer.getString("unitId"),
+                        unit = new DAOUnit(answer.getString("unitId"),
                                 answer.getString("playerId"),
                                 new BlockPosition(answer.getInt("x"), answer.getInt("y")),
                                 WorldName.valueOf(answer.getString("world")),
@@ -240,16 +230,16 @@ public class DataManager {
                 }
                 answer.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Server.logs.logError(e);
             }
             return unit;
         }
     }
-
-    public ArrayList<Unit> getAllUnits() throws ServerException {
+    @Override
+    public ArrayList<DAOUnit> getAllUnits() throws ServerException {
         initConnection();
         synchronized(lock){
-            ArrayList<Unit> units = new ArrayList();
+            ArrayList<DAOUnit> units = new ArrayList();
             Statement query;
             ResultSet answer;
             String sql = "SELECT * FROM `units` WHERE 1;";
@@ -262,7 +252,7 @@ public class DataManager {
                 answer = query.executeQuery(sql);
                 while (answer.next()!=false) {
                     if (answer.wasNull() == false) {
-                        Unit unit = new Unit(answer.getString("unitId"),
+                        DAOUnit unit = new DAOUnit(answer.getString("unitId"),
                                 answer.getString("playerId"),
                                 new BlockPosition(answer.getInt("x"), answer.getInt("y")),
                                 WorldName.valueOf(answer.getString("world")),
@@ -272,18 +262,19 @@ public class DataManager {
                 }
                 answer.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Server.logs.logError(e);
             }
             return units;
         }
     }
-
-    public void savePlayer(Player p) {
+    @Override
+    public void savePlayer(DAOPlayer p) {
+        // todo
+    }
+    @Override
+    public void saveUnits(ArrayList<DAOUnit> units) {
         // todo
     }
 
-    public void saveUnits(ArrayList<Unit> units) {
-        // todo
-    }
 
 }

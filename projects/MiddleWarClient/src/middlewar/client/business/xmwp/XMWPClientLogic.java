@@ -5,8 +5,6 @@
 
 package middlewar.client.business.xmwp;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import middlewar.client.business.Game;
 import middlewar.xmwp.elements.inform.*;
 import middlewar.xmwp.elements.request.*;
@@ -24,7 +22,6 @@ public class XMWPClientLogic extends XMWPBaseLogic{
 
     private XMWPClientThread link;
     private Game game;
-
 
     public XMWPClientLogic(XMWPClientThread link) {
         this.link = link;
@@ -136,14 +133,16 @@ public class XMWPClientLogic extends XMWPBaseLogic{
                 Unit u = Game.getAgentUnits().getUnit(element.getId());
                 u.setX(element.getX());
                 u.setY(element.getY());
-                u.setMap(map);
+                if(map != null) u.setMap(map);
                 game.modifyUnit(u);
             }
 
-            if(!Game.getAgentWorld().maps.containsKey(map)){
-                Game.getAgentWorld().maps.put(map, new Map(map));
-                message.addRequest(new BlockRequestElement(map));
-                message.addRequest(new UpdateRequestElement(map,true));
+            if(map!=null){
+                if(!Game.getAgentWorld().maps.containsKey(map)){
+                    Game.getAgentWorld().maps.put(map, new Map(map));
+                    message.addRequest(new BlockRequestElement(map));
+                    message.addRequest(new UpdateRequestElement(map,true));
+                }
             }
 
         } catch (ClientException e) {
@@ -152,6 +151,9 @@ public class XMWPClientLogic extends XMWPBaseLogic{
 
     }
 
-
+    @Override
+    public void onReceivedInformSkill(SkillInformElement element, Message message) throws XMWPException {
+        //Game.getInstance().addInfo(element.getName());
+    }
 
 }

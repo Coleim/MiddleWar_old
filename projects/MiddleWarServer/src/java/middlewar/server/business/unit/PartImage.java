@@ -60,7 +60,6 @@ public enum PartImage{
     clothing_2_D_2("clothing_2/D_2",32,48),
     clothing_2_D_3("clothing_2/D_3",32,48),
 
-
     head_1_R_0("head_1/R_0",32,48),
     head_1_R_1("head_1/R_1",32,48),
     head_1_R_2("head_1/R_2",32,48),

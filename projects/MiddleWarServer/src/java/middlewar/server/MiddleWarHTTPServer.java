@@ -43,9 +43,13 @@ public class MiddleWarHTTPServer extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+
+        Server.logs.logInfo("HTTPServer called by "+request.getRemoteAddr());
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.print("<html>");
+
         try{
 
             // get the player
@@ -90,13 +94,16 @@ public class MiddleWarHTTPServer extends HttpServlet {
                 else throw new ServerException("no action specified");
                 
             } catch (ServerException e) {
-               p.addXMWPUpdate(new ErrorInformElement(e.getMessage()));
+                Server.logs.logError(e,this.getClass().getSimpleName());
+                p.addXMWPUpdate(new ErrorInformElement(e.getMessage()));
             }
 
         } catch(XMWPException e){
-            e.printStackTrace();
+            Server.logs.logError(e,this.getClass().getSimpleName());
         } catch (ServerException e) {
-            e.printStackTrace();
+            Server.logs.logError(e,this.getClass().getSimpleName());
+        } catch (Exception e) {
+            Server.logs.logError(e);
         } finally {
             out.print("</html>");
             out.close();

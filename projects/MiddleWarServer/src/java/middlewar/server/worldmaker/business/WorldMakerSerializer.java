@@ -16,6 +16,7 @@
 package middlewar.server.worldmaker.business;
 
 import java.io.*;
+import middlewar.server.Server;
 import middlewar.server.exception.ServerException;
 
 /**
@@ -81,48 +82,49 @@ public class WorldMakerSerializer {
 
 
     public static Map loadMap(String file) throws ServerException {
-		Map w = null;
-		try {
-
-			FileInputStream fis = new FileInputStream(file);
-			ObjectInputStream ois= new ObjectInputStream(fis);
-			try {
-				w = (Map) ois.readObject();
-			} finally {
-				try {
-					ois.close();
-				} finally {
-					fis.close();
-				}
-			}
-		} catch(IOException ioe) {
-			throw new ServerException(ioe);
-		} catch(ClassNotFoundException cnfe) {
-			throw new ServerException(cnfe);
-		}
+	Server.logs.logWMInfo("load map ("+file+")");
+        Map w = null;
+        try {
+                FileInputStream fis = new FileInputStream(file);
+                ObjectInputStream ois= new ObjectInputStream(fis);
+                try {
+                        w = (Map) ois.readObject();
+                } finally {
+                        try {
+                                ois.close();
+                        } finally {
+                                fis.close();
+                        }
+                }
+        } catch(IOException ioe) {
+                throw new ServerException(ioe);
+        } catch(ClassNotFoundException cnfe) {
+                throw new ServerException(cnfe);
+        }
         return w;
-	}
+    }
 
     public static World loadWorld(String file) throws ServerException {
-		World w = null;
-		try {
+        Server.logs.logWMInfo("load world ("+file+")");
+        World w = null;
+        try {
 
-			FileInputStream fis = new FileInputStream(file);
-			ObjectInputStream ois= new ObjectInputStream(fis);
-			try {
-				w = (World) ois.readObject();
-			} finally {
-				try {
-					ois.close();
-				} finally {
-					fis.close();
-				}
-			}
-		} catch(IOException ioe) {
-			throw new ServerException(ioe);
-		} catch(ClassNotFoundException cnfe) {
-			throw new ServerException(cnfe);
-		}
-        return w;
-	}
+                FileInputStream fis = new FileInputStream(file);
+                ObjectInputStream ois= new ObjectInputStream(fis);
+                try {
+                        w = (World) ois.readObject();
+                } finally {
+                        try {
+                                ois.close();
+                        } finally {
+                                fis.close();
+                        }
+                }
+        } catch(IOException ioe) {
+                throw new ServerException(ioe);
+        } catch(ClassNotFoundException cnfe) {
+                throw new ServerException(cnfe);
+        }
+    return w;
+    }
 }

@@ -5,17 +5,14 @@
 
 package middlewar.server.xmwp;
 
+import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import middlewar.common.BlockPosition;
-import middlewar.common.MapPosition;
-import middlewar.common.Orientation;
+import middlewar.common.*;
 import middlewar.server.Server;
-import middlewar.server.ServerSecurity;
-import middlewar.server.business.player.Player;
-import middlewar.server.business.unit.Unit;
+import middlewar.server.business.player.*;
+import middlewar.server.business.skill.*;
+import middlewar.server.business.unit.*;
 import middlewar.server.exception.ServerException;
 import middlewar.server.worldmaker.business.*;
 import middlewar.xmwp.*;
@@ -47,7 +44,7 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             }
 
         } catch (ServerException e) {
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
         }
     }
@@ -80,7 +77,7 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             }
 
         }catch(ServerException e){
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
          }
     }
@@ -101,7 +98,7 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             }
             
          }catch(ServerException e){
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
          }
     }
@@ -116,12 +113,12 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             
             Player p = Server.playerManager.getPlayerById(id);
 
-            String[] units = Server.playerManager.getPlayerUnitsIds(p);
+            ArrayList<String> units = Server.playerManager.getPlayerUnitsIds(p);
 
-            message.addInform(new PlayerInformElement(units,p.getId()));
+            message.addInform(new PlayerInformElement(units.toArray(new String[units.size()]),p.getId()));
 
         } catch (ServerException e) {
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
         }
         
@@ -137,12 +134,19 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             // get the inform element describing the unit
             UnitInformElement e = u.getXMWPElement(true);
             message.addInform(e);
+            
+            // unit skills
+            for(Skill s : u.getSkills()){
+                Element elt = s.getXMWPElement();
+                message.addInform(elt);
+                Server.xmwpUpdateManager.addUpdateInMap(elt, e.getMap(), playerId);
+            }
 
             // tell others players
             Server.xmwpUpdateManager.addUpdateInMap(u.getXMWPElement(false), e.getMap(), playerId);
 
         } catch (ServerException e) {
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
         }
          
@@ -158,7 +162,8 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             // security test
             if(!u.getPlayerId().equals(playerId)) throw new ServerException("wrong player id to move this unit");
 
-            if(Server.worldManager.canMoveUnitTo(u,element.getX(),element.getY())){
+
+            //if(Server.worldManager.canMoveUnitTo(u,element.getX(),element.getY())){
             
                 // move the unit
                 u.setPosition(new BlockPosition(element.getX(),element.getY()));
@@ -166,18 +171,18 @@ public class XMWPServerLogic extends XMWPBaseLogic{
                 // get the inform element describing the unit
                 UnitInformElement e = u.getXMWPElement(true);
                 message.addInform(e);
-
+                
                 // tell others players
                 Server.xmwpUpdateManager.addUpdateInMap(u.getXMWPElement(false), e.getMap(), playerId);
 
-            }
+            //}
 
         } catch (ServerException e) {
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
-        }  catch (WorldMakerException e) {
-            e.printStackTrace();
-            message.addInform(new ErrorInformElement(e.getMessage()));
+        //}  catch (WorldMakerException e) {
+        //    Server.logManager.logXMWPError(e.getMessage(), e);
+        //    message.addInform(new ErrorInformElement(e.getMessage()));
         }
 
     }
@@ -222,10 +227,10 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             }
 
         } catch (WorldMakerException e) {
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
         } catch (ServerException e) {
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
         }
 
@@ -242,7 +247,7 @@ public class XMWPServerLogic extends XMWPBaseLogic{
             Server.playerManager.savePlayer(p);
 
         } catch (ServerException e) {
-            e.printStackTrace();
+            Server.logs.logError(e);
             message.addInform(new ErrorInformElement(e.getMessage()));
         }
     }

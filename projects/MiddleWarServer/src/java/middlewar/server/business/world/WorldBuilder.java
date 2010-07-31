@@ -8,6 +8,7 @@ package middlewar.server.business.world;
 import middlewar.server.business.world.parts.*;
 import middlewar.server.worldmaker.business.*;
 import middlewar.common.*;
+import middlewar.server.Server;
 
 /**
  * World (set of map) builder
@@ -18,12 +19,17 @@ public class WorldBuilder {
     private WorldPartBuilder[][] list;
     private WorldName name;
 
+    /**
+     * Create a new WorldBulder
+     * @param name the name of the world
+     */
     public WorldBuilder(WorldName name){
 
         this.name = name;
 
         try {
 
+            // Link worlds with maps
             switch(name){
 
                 case test1 : {
@@ -42,14 +48,23 @@ public class WorldBuilder {
             }
 
         } catch (WorldMakerException e) {
-            // none
+            Server.logs.logError(e);
         }
     }
 
+    /**
+     * Return the name of the world
+     * @return the world name
+     */
     public WorldName getName() {
         return name;
     }
 
+    /**
+     * Generate the world
+     * @return the world object
+     * @throws WorldMakerException
+     */
     public World generate() throws WorldMakerException {
 
         World mw = new World(this.name);
@@ -67,7 +82,6 @@ public class WorldBuilder {
         }
 
         return mw;
-
     }
 
 }

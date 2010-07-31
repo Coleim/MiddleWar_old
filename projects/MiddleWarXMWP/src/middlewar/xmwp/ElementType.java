@@ -23,6 +23,7 @@ public enum ElementType {
     player(PlayerInformElement.class,PlayerRequestElement.class,"xmwp:player"),
     move(MoveInformElement.class,MoveRequestElement.class,"xmwp:move"),
     update(null,UpdateRequestElement.class,"xmwp:update"),
+    skill(SkillInformElement.class,null,"xmwp:skill"),
     unit(UnitInformElement.class,UnitRequestElement.class,"xmwp:unit");
     
 

@@ -5,24 +5,20 @@
 
 package middlewar.server.business.unit;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import middlewar.common.BlockPosition;
-import middlewar.common.Orientation;
+import java.util.ArrayList;
+import middlewar.common.*;
 import middlewar.server.Server;
 import middlewar.server.business.ai.ArtificialIntelligence;
 import middlewar.server.business.player.Player;
+import middlewar.server.business.skill.*;
+import middlewar.server.data.DAOUnit;
 import middlewar.server.exception.ServerException;
-import middlewar.server.worldmaker.business.World;
-import middlewar.server.worldmaker.business.WorldMakerException;
-import middlewar.server.worldmaker.business.WorldName;
-import middlewar.xmwp.Element;
-import middlewar.xmwp.XMWPException;
-import middlewar.xmwp.XMWPable;
+import middlewar.server.worldmaker.business.*;
+import middlewar.xmwp.*;
 import middlewar.xmwp.elements.inform.UnitInformElement;
 
 /**
- * Unit of the game
+ * Unit
  * @author higurashi
  */
 public class Unit implements XMWPable{
@@ -42,14 +38,35 @@ public class Unit implements XMWPable{
     private Orientation orientation;
 
     private ArtificialIntelligence intelligence;
-    
-    public Unit(String id,String playerId, BlockPosition position, WorldName world, Orientation orientation) {
+
+    private ArrayList<Skill> skills;
+
+    private Unit(String id,String playerId, BlockPosition position, WorldName world, Orientation orientation) {
         this.id = id;
         this.position = position;
         this.world = world;
         this.orientation = orientation;
         this.playerId = playerId;
         this.intelligence = null;
+        skills = new ArrayList<Skill>();
+        //this.addSkill(new UnitSkill(SkillType.usable_talk, id));
+    }
+
+
+    public Unit(DAOUnit unit){
+        this(unit.getId(),
+             unit.getPlayerId(),
+             unit.getPosition(),
+             unit.getWorld(),
+             unit.getOrientation());
+    }
+
+    public void addSkill(Skill skill){
+        skills.add(skill);
+    }
+
+    public ArrayList<Skill> getSkills(){
+        return skills;
     }
 
     public WorldName getWorld() {
@@ -121,12 +138,8 @@ public class Unit implements XMWPable{
 
     public UnitInformElement getXMWPElement(boolean focus) throws XMWPException {
         try {
-            // the world of the unit
-            World w = Server.worldManager.getWorldByName(getWorld());
-            // get maps
-            String[] mapsNames = w.getMapForPosition(getPosition());
-            // main map
-            String m = mapsNames[0];
+
+            String[] mapsNames = Server.unitManager.getMaps(this);
 
             if(focus){
                 Player p = Server.playerManager.getPlayerById(playerId);
@@ -134,7 +147,7 @@ public class Unit implements XMWPable{
             }
 
             // build the inform element
-            return new UnitInformElement(getId(), getPlayerId(), m, getPosition().getBlockX(), getPosition().getBlockY(), mapsNames, focus);
+            return new UnitInformElement(getId(), getPlayerId(), mapsNames[0], getPosition().getBlockX(), getPosition().getBlockY(), mapsNames, focus);
         }
         catch (WorldMakerException ex) {
             ex.printStackTrace();
